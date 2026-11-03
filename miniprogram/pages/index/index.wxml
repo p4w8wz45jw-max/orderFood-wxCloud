@@ -1,0 +1,324 @@
+<!--pages/index/index.wxml-->
+<wxs module="tagHelper" src="/utils/tagHelper.wxs"></wxs>
+<view class="page" style="--theme-color: {{themeColor}};">
+  <!-- 状态栏占位（加 !important） -->
+  <view class="status-bar" style="height: {{statusBarHeight}}px; background-color: {{themeColor}} !important;"></view>
+  
+  <!-- 店名（加 !important） -->
+  <view class="shop-header" style="background-color: {{themeColor}} !important;">
+    <text class="shop-name">{{shopInfo.name || '餐饮店'}}</text>
+  </view>
+
+  <!-- 搜索栏 -->
+  <view class="search-wrapper">
+    <view class="search-bar">
+      <input class="search-input" placeholder="搜索菜品..." value="{{searchKeyword}}" bindinput="onSearchInput" bindconfirm="onSearchConfirm" confirm-type="search" />
+      <view class="search-clear" wx:if="{{searchKeyword}}" bindtap="clearSearch">×</view>
+    </view>
+  </view>
+
+  <!-- 新用户赠礼横幅 -->
+  <view class="new-user-gift-banner" wx:if="{{showNewUserGiftBanner && newUserGiftConfig}}" bindtap="onNewUserGiftTap" style="background: linear-gradient(135deg, {{isOldUserForGift ? '#999' : themeColor}}, {{isOldUserForGift ? '#bbb' : themeColor}}dd);">
+    <view class="gift-banner-content">
+      <view class="gift-banner-left">
+        <text class="gift-banner-title">新用户福利</text>
+        <text class="gift-banner-desc">{{isOldUserForGift ? '【' + newUserGiftConfig.couponName + '】仅限新用户领取' : '登录即送【' + newUserGiftConfig.couponName + '】'}}</text>
+      </view>
+      <view class="gift-banner-right">
+        <text class="gift-banner-btn" style="{{isOldUserForGift ? 'background:#eee;color:#999;' : ''}}">{{isOldUserForGift ? '查看详情' : '立即领取'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 轮播公告 -->
+  <view class="notice-wrapper" wx:if="{{noticeList.length > 0}}">
+    <van-notice-bar 
+      left-icon="volume-o"
+      text="{{noticeText}}"
+      scrollable
+      speed="{{30}}"
+    />
+  </view>
+
+  <!-- 轮播广告图 -->
+  <view class="banner-swiper-wrapper" wx:if="{{carouselImages.length > 0}}">
+    <view class="banner-frame">
+      <swiper class="banner-swiper" indicator-dots="{{carouselImages.length > 1}}" autoplay interval="{{3000}}" circular duration="{{500}}" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="{{themeColor}}">
+        <swiper-item wx:for="{{carouselImages}}" wx:key="index">
+          <image class="banner-image" src="{{item}}" mode="aspectFill"></image>
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+
+  <!-- 闭店通知 -->
+  <view class="closed-notice" wx:if="{{shopInfo.isOpen === false}}" style="background-color: {{themeColor}};">
+    <text class="closed-text">店铺已打烊，暂时无法下单</text>
+  </view>
+
+  <!-- 主内容区 -->
+  <view class="main-content" wx:if="{{!searchKeyword}}">
+    <!-- 左侧分类菜单 -->
+    <scroll-view class="menu-sidebar" scroll-y enhanced show-scrollbar="{{false}}" enable-passive="{{true}}" bounces="{{false}}" style="height: {{contentHeight}}px;">
+      <view 
+        class="menu-item {{currentMenuId === item._id ? 'active' : ''}}" 
+        wx:for="{{menuList}}" 
+        wx:key="_id"
+        bindtap="switchMenu"
+        data-id="{{item._id}}">
+        <text class="menu-name">{{item.name}}</text>
+        <view class="menu-indicator"></view>
+      </view>
+    </scroll-view>
+
+    <!-- 右侧菜品列表 -->
+    <scroll-view class="goods-list" scroll-y enhanced show-scrollbar="{{false}}" enable-passive="{{true}}" bounces="{{false}}" lower-threshold="{{100}}" bindscrolltolower="onGoodsScrollToLower" style="height: {{contentHeight}}px;">
+      <view class="goods-item" wx:for="{{goodsList}}" wx:key="_id">
+        <image class="goods-image" src="{{item.image}}" mode="aspectFill" lazy-load bindtap="previewDishImage" data-image="{{item.image}}" data-images="{{goodsList}}"></image>
+        <view class="goods-info">
+          <view class="goods-name">{{item.name}}</view>
+          <view class="goods-desc" wx:if="{{item.description || item.desc}}">{{item.description || item.desc}}</view>
+          <view class="miandan-tip" wx:if="{{item.canUseMiandan}}">可参与免单活动</view>
+          <view class="goods-footer">
+            <view class="goods-price-wrap">
+              <view class="goods-price">
+                <text class="price-symbol">¥</text>
+                <text class="price-num">{{item.price}}</text>
+                <text class="price-original" wx:if="{{item.originalPrice && item.originalPrice > 0}}">¥{{item.originalPrice}}</text>
+              </view>
+              <view class="member-price" wx:if="{{item.memberPrice}}">
+                <text class="member-price-tag">会员价</text>
+                <text class="member-price-num">¥{{item.memberPrice}}</text>
+              </view>
+            </view>
+            <view class="goods-actions">
+              <view class="action-btn reduce" wx:if="{{item.cartCount > 0}}" bindtap="reduceDishFromCart" data-goods="{{item}}">
+                <text>-</text>
+              </view>
+              <view class="goods-count" wx:if="{{item.cartCount > 0}}">{{item.cartCount}}</view>
+              <view class="action-btn add" style="background-color: {{themeColor}};" bindtap="addDishToCartDirect" data-goods="{{item}}">
+                <text>+</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:if="{{goodsList.length === 0}}" class="empty-tip">暂无菜品</view>
+    </scroll-view>
+  </view>
+
+  <!-- 搜索结果区 -->
+  <scroll-view class="goods-list search-results" scroll-y wx:if="{{searchKeyword}}" style="height: {{searchContentHeight}}px;">
+    <view class="search-header-info" wx:if="{{searchKeyword}}">
+      <text class="search-tip">搜索"{{searchKeyword}}"共 {{searchResults.length}} 个结果</text>
+    </view>
+    <view class="goods-item" wx:for="{{searchResults}}" wx:key="_id">
+      <image class="goods-image" src="{{item.image}}" mode="aspectFill" lazy-load bindtap="previewDishImage" data-image="{{item.image}}" data-images="{{searchResults}}"></image>
+      <view class="goods-info">
+        <view class="goods-name">{{item.name}}</view>
+        <view class="goods-desc" wx:if="{{item.description || item.desc}}">{{item.description || item.desc}}</view>
+        <view class="miandan-tip" wx:if="{{item.canUseMiandan}}">可参与免单活动</view>
+        <view class="goods-footer">
+          <view class="goods-price-wrap">
+            <view class="goods-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-num">{{item.price}}</text>
+              <text class="price-original" wx:if="{{item.originalPrice && item.originalPrice > 0}}">¥{{item.originalPrice}}</text>
+            </view>
+            <view class="member-price" wx:if="{{item.memberPrice}}">
+              <text class="member-price-tag">会员价</text>
+              <text class="member-price-num">¥{{item.memberPrice}}</text>
+            </view>
+          </view>
+          <view class="goods-actions">
+            <view class="action-btn reduce" wx:if="{{item.cartCount > 0}}" bindtap="reduceDishFromCart" data-goods="{{item}}">
+              <text>-</text>
+            </view>
+            <view class="goods-count" wx:if="{{item.cartCount > 0}}">{{item.cartCount}}</view>
+            <view class="action-btn add" style="background-color: {{themeColor}};" bindtap="addDishToCartDirect" data-goods="{{item}}">
+              <text>+</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{searchResults.length === 0 && searched}}" class="empty-tip">未找到相关菜品</view>
+  </scroll-view>
+
+  <!-- 悬浮购物车 -->
+  <view class="float-cart-wrapper">
+    <view class="float-cart-card">
+      <view class="cart-left" bindtap="toggleCart">
+        <view class="cart-icon-wrapper">
+          <image class="cart-icon" src="/images/shopping.png" mode="aspectFit"></image>
+          <view class="cart-badge" style="background-color: {{themeColor}};" wx:if="{{cartCount > 0}}">{{cartCount}}</view>
+        </view>
+        <view class="cart-info">
+          <view class="cart-price">
+            <text class="price-label" style="color: {{themeColor}};">总价：</text>
+            <text class="price-symbol">¥</text>
+            <text class="price-num">{{cartTotalPriceText}}</text>
+          </view>
+        </view>
+      </view>
+      <view class="cart-right">
+        <view class="settle-btn {{cartCount > 0 ? 'active' : ''}}" style="{{cartCount > 0 ? 'background-color: ' + themeColor : ''}}" bindtap="goToSettle">
+          去结算
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 购物车详情弹窗 -->
+  <view class="cart-mask {{showCart ? 'show' : ''}}" bindtap="toggleCart"></view>
+  <view class="cart-detail {{showCart ? 'show' : ''}}">
+    <view class="cart-header">
+      <text class="cart-title">购物车</text>
+      <text class="cart-clear" style="color: {{themeColor}};" bindtap="clearCart">清空</text>
+    </view>
+    <scroll-view class="cart-content" scroll-y>
+      <view class="cart-goods-item" wx:for="{{cart}}" wx:for-item="item" wx:key="index">
+        <view class="cart-goods-info">
+          <image class="cart-goods-image" src="{{item.info.image}}" mode="aspectFill"></image>
+          <view class="cart-goods-detail">
+            <view class="cart-goods-name">{{item.info.name}}</view>
+            <view class="cart-goods-tags" wx:if="{{item.tagLabels && item.tagLabels.length > 0}}">
+              <text class="tag-text" style="color: {{themeColor}}; background: {{themeColor}}20;" wx:for="{{item.tagLabels}}" wx:key="index" wx:for-item="tagVal">
+                {{tagVal}}
+              </text>
+            </view>
+            <view class="cart-goods-price">¥{{item.info.price}} × {{item.count}}</view>
+          </view>
+        </view>
+        <view class="cart-goods-actions">
+          <view class="action-btn reduce" bindtap="reduceFromCart" data-id="{{index}}">
+            <text>-</text>
+          </view>
+          <view class="cart-count">{{item.count}}</view>
+          <view class="action-btn add" style="background-color: {{themeColor}};" bindtap="addToCartFromCart" data-id="{{index}}">
+            <text>+</text>
+          </view>
+        </view>
+      </view>
+      
+      <view wx:if="{{cartCount === 0}}" class="empty-tip">购物车是空的</view>
+    </scroll-view>
+    
+    <view class="cart-footer" wx:if="{{cartCount > 0}}">
+      <view class="cart-footer-left">
+        <view class="cart-total-label">合计：</view>
+        <view class="cart-total-price">
+          <text class="price-symbol">¥</text>
+          <text class="price-num">{{cartTotalPriceText}}</text>
+        </view>
+      </view>
+      <view class="cart-footer-right">
+        <view class="cart-settle-btn" style="background-color: {{themeColor}};" bindtap="goToSettle">去结算</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品详情弹窗 -->
+  <view class="modal-mask" wx:if="{{showTagModal}}" catchtap="closeTagModal">
+    <view class="modal-dialog dish-detail-modal" catchtap="stopPropagation">
+      <view class="modal-close" bindtap="closeTagModal">×</view>
+      <scroll-view class="modal-content" scroll-y>
+        <view class="dish-detail-header">
+          <image class="dish-detail-image" src="{{currentDish.image}}" mode="aspectFill" bindtap="previewDishImage" data-image="{{currentDish.image}}" data-images="{{goodsList}}"></image>
+          <view class="dish-detail-info">
+            <view class="dish-detail-name">{{currentDish.name}}</view>
+            <view class="dish-detail-desc" wx:if="{{currentDish.description}}">{{currentDish.description}}</view>
+            <view class="miandan-tip" wx:if="{{currentDish.canUseMiandan}}">可参与免单活动</view>
+            <view class="dish-detail-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-num">{{currentDish.price}}</text>
+            </view>
+            <view class="dish-detail-member-price" wx:if="{{currentDish.memberPrice}}">
+              <text class="member-price-tag">会员价</text>
+              <text class="member-price-num">¥{{currentDish.memberPrice}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="tag-section" wx:if="{{currentDish.tags && currentDish.tags.length > 0}}" wx:for="{{currentDish.tags}}" wx:key="id" wx:for-item="tag">
+          <view class="tag-title">
+            {{tag.name}}
+            <text class="tag-type-label">{{tag.type === 'single' ? '(单选)' : tag.type === 'multiple' ? '(多选)' : '(' + (tag.options ? tag.options.length : 'N') + '选' + (tag.pickCount || 'M') + ')'}}</text>
+            <text class="tag-required-label" style="background-color: {{themeColor}};" wx:if="{{tag.required}}">必选</text>
+          </view>
+          
+          <view class="tag-options" wx:if="{{tag.type === 'single'}}">
+            <view 
+              class="tag-option {{selectedTags[tag.id] === option ? 'selected' : ''}}"
+              wx:for="{{tag.options}}"
+              wx:key="index"
+              wx:for-item="option"
+              bindtap="selectTagOption"
+              data-tag-id="{{tag.id}}"
+              data-option="{{option}}"
+              style="{{selectedTags[tag.id] === option ? 'background: ' + themeColor + '; border-color: ' + themeColor : ''}}">
+              {{option}}
+            </view>
+          </view>
+
+          <view class="tag-options" wx:if="{{tag.type === 'multiple'}}">
+            <view 
+              wx:for="{{tag.options}}"
+              wx:key="index"
+              wx:for-item="option"
+              class="tag-option {{tagHelper.isTagOptionSelected(selectedTags, tag.id, option) ? 'selected' : ''}}"
+              bindtap="toggleTagOption"
+              data-tag-id="{{tag.id}}"
+              data-option="{{option}}"
+              style="{{tagHelper.isTagOptionSelected(selectedTags, tag.id, option) ? 'background: ' + themeColor + '; border-color: ' + themeColor : ''}}">
+              {{option}}
+            </view>
+          </view>
+
+          <view class="tag-options" wx:if="{{tag.type === 'pick'}}">
+            <view 
+              wx:for="{{tag.options}}"
+              wx:key="index"
+              wx:for-item="option"
+              class="tag-option {{tagHelper.isTagOptionSelected(selectedTags, tag.id, option) ? 'selected' : ''}}"
+              bindtap="pickTagOption"
+              data-tag-id="{{tag.id}}"
+              data-option="{{option}}"
+              data-max="{{tag.pickCount || 1}}"
+              style="{{tagHelper.isTagOptionSelected(selectedTags, tag.id, option) ? 'background: ' + themeColor + '; border-color: ' + themeColor : ''}}">
+              {{option}}
+            </view>
+          </view>
+        </view>
+
+        <view class="quantity-section">
+          <view class="quantity-label">数量</view>
+          <view class="quantity-controls">
+            <view class="quantity-btn {{modalDishCount <= 1 ? 'disabled' : ''}}" style="{{modalDishCount > 1 ? 'background-color: ' + themeColor : ''}}" bindtap="decreaseModalCount">-</view>
+            <view class="quantity-num">{{modalDishCount}}</view>
+            <view class="quantity-btn" style="background-color: {{themeColor}};" bindtap="increaseModalCount">+</view>
+          </view>
+        </view>
+      </scroll-view>
+      
+      <view class="modal-footer-bar">
+        <view class="footer-price">
+          <text class="total-label">小计：</text>
+          <text class="price-symbol">¥</text>
+          <text class="price-num">{{modalTotalPrice}}</text>
+        </view>
+        <view class="add-cart-btn" style="background-color: {{themeColor}};" bindtap="confirmAddToCart">加入购物车</view>
+      </view>
+    </view>
+  </view>
+
+  <avatar-nickname-modal
+    showAvaModal="{{showAuthModal}}"
+    bind:saved="onUserInfoSaved">
+  </avatar-nickname-modal>
+
+  <!-- 全局分享卡 Canvas（离屏不可见，用于绘制品牌海报并缓存本地） -->
+  <canvas type="2d" id="__share_card_canvas__"
+    style="position:fixed;left:-9999px;top:-9999px;width:1285px;height:964px;opacity:0;pointer-events:none;"></canvas>
+</view>

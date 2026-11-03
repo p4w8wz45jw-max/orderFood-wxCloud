@@ -1,0 +1,171 @@
+<!-- pages/diy/diy.wxml -->
+<view class="page">
+  <!-- 顶部横幅 -->
+  <view class="banner">
+    <view class="banner-title">DIY 随心配</view>
+    <view class="banner-sub">自选肉类蔬菜，美味由你搭配</view>
+  </view>
+
+  <!-- 未配置提示 -->
+  <view class="empty-tip" wx:if="{{configLoaded && !enable}}">
+    <text class="empty-icon">🍱</text>
+    <text class="empty-text">商家暂未开启DIY菜单，请稍后再来</text>
+  </view>
+
+  <!-- 套餐卡片 -->
+  <view class="menu-cards" wx:if="{{enable}}">
+    <view class="menu-card" wx:if="{{twoEnable}}" bindtap="openSelector" data-type="twoMeatOneVeg">
+      <view class="card-icon">🍱</view>
+      <view class="card-info">
+        <view class="card-name">两荤一素</view>
+        <view class="card-desc">任选 2 荤 + 1 素</view>
+      </view>
+      <view class="card-price">
+        <text class="price-prefix">¥</text>
+        <text class="price-num">{{twoPrice}}</text>
+        <text class="card-arrow">›</text>
+      </view>
+    </view>
+
+    <view class="menu-card" wx:if="{{oneEnable}}" bindtap="openSelector" data-type="oneMeatOneVeg">
+      <view class="card-icon">🍚</view>
+      <view class="card-info">
+        <view class="card-name">一荤一素</view>
+        <view class="card-desc">任选 1 荤 + 1 素</view>
+      </view>
+      <view class="card-price">
+        <text class="price-prefix">¥</text>
+        <text class="price-num">{{onePrice}}</text>
+        <text class="card-arrow">›</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 一周菜单 -->
+  <view class="week-section" wx:if="{{enable}}">
+    <view class="week-header" bindtap="toggleWeek">
+      <view class="week-header-left">
+        <view class="week-title">🗓️ 我的一周菜单</view>
+        <text class="week-sub">提前配好每天吃什么，一键下单</text>
+      </view>
+      <view class="week-toggle">
+        <text>{{weekExpanded ? '收起' : '展开'}}</text>
+        <text class="week-arrow {{weekExpanded ? 'expanded' : ''}}">▾</text>
+      </view>
+    </view>
+    <block wx:if="{{weekExpanded}}">
+      <view class="week-grid">
+        <block wx:for="{{weekDays}}" wx:key="day">
+          <!-- 已设置的星期：整卡不可点，点"去结算"按钮付款 -->
+          <view wx:if="{{weekMenus[item.day]}}" class="week-card filled">
+            <view class="week-day-label">{{item.label}}</view>
+            <view class="week-card-content">
+              <view class="week-card-name">{{weekMenus[item.day].dishName}}</view>
+              <view class="week-card-combo">{{weekMenus[item.day].comboText}}</view>
+            </view>
+            <view class="week-card-bottom">
+              <text class="week-card-price">¥{{weekMenus[item.day].price}}</text>
+              <view class="week-actions">
+                <view class="week-pay" catchtap="payWeekMenu" data-day="{{item.day}}">去结算</view>
+                <view class="week-edit" catchtap="openWeekSelector" data-day="{{item.day}}">编辑</view>
+              </view>
+            </view>
+          </view>
+          <!-- 未设置的星期：点击整卡进入配置 -->
+          <view wx:else class="week-card" bindtap="openWeekSelector" data-day="{{item.day}}">
+            <view class="week-day-label">{{item.label}}</view>
+            <view class="week-card-empty">
+              <text class="week-add-icon">＋</text>
+              <text class="week-add-text">设置菜单</text>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="week-tip">点"去结算"按钮即可直接下单</view>
+    </block>
+  </view>
+
+  <!-- 没有想吃的？提建议 -->
+  <view class="suggest-entry" wx:if="{{enable}}" bindtap="openSuggestion">
+    <text class="suggest-entry-icon">💡</text>
+    <view class="suggest-entry-text">
+      <text class="suggest-entry-title">没有想吃的？</text>
+      <text class="suggest-entry-sub">告诉我你想吃的菜品，我会为你上新</text>
+    </view>
+    <text class="suggest-entry-arrow">›</text>
+  </view>
+
+  <!-- 选择弹层 -->
+  <view class="modal-mask" wx:if="{{showSelector}}" catchtap="closeSelector">
+    <view class="selector-panel" catchtap="stopPropagation">
+      <view class="selector-header">
+        <text class="selector-title">{{selectorTitle}}</text>
+        <text class="selector-close" bindtap="closeSelector">✕</text>
+      </view>
+
+      <scroll-view class="selector-body" scroll-y>
+        <!-- 肉类 -->
+        <view class="option-group">
+          <view class="option-group-title">选择肉类（选{{maxMeat}}个）</view>
+          <view class="option-grid">
+            <view class="option-item {{item.selected ? 'selected' : ''}}"
+              wx:for="{{currentMeats}}" wx:key="key"
+              data-index="{{index}}" bindtap="toggleMeat">
+              <view class="option-check" wx:if="{{item.selected}}">✓</view>
+              <text class="option-name">{{item.name}}</text>
+              <view wx:if="{{item.price > 0}}" class="option-extra">
+                <text class="option-extra-prefix">+¥</text>
+                <text class="option-extra-num">{{item.price}}</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 菜类 -->
+        <view class="option-group">
+          <view class="option-group-title">选择菜类（选1个）</view>
+          <view class="option-grid">
+            <view class="option-item {{item.selected ? 'selected' : ''}}"
+              wx:for="{{currentVegs}}" wx:key="key"
+              data-index="{{index}}" bindtap="toggleVeg">
+              <view class="option-check" wx:if="{{item.selected}}">✓</view>
+              <text class="option-name">{{item.name}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 底部结算栏 -->
+      <view class="selector-footer">
+        <view class="footer-total">
+          <view class="total-info">
+            <text class="total-label">{{extraTip ? '套餐价+加价' : '套餐价'}}</text>
+            <text wx:if="{{extraTip}}" class="total-extra">{{extraTip}}</text>
+          </view>
+          <text class="total-num">¥{{totalPrice}}</text>
+        </view>
+        <view class="confirm-btn" style="background: {{themeColor}};" bindtap="confirmOrder">{{weekConfirmText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 提建议弹层 -->
+  <view class="modal-mask" wx:if="{{showSuggestion}}" catchtap="closeSuggestion">
+    <view class="suggest-panel" catchtap="stopPropagation">
+      <view class="selector-header">
+        <text class="selector-title">告诉我你想吃什么</text>
+        <text class="selector-close" bindtap="closeSuggestion">✕</text>
+      </view>
+      <view class="suggest-body">
+        <textarea class="suggest-textarea" placeholder="写下你想吃的菜品，如：想吃水煮鱼、麻婆豆腐、蛋炒饭..." maxlength="200"
+          value="{{suggestionText}}" bindinput="onSuggestionInput" />
+        <view class="suggest-count">{{suggestionText.length}}/200</view>
+      </view>
+      <view class="suggest-footer">
+        <view class="confirm-btn suggest-submit" style="background: {{themeColor}};" bindtap="submitSuggestion">
+          {{suggesting ? '提交中...' : '提交建议'}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,50 @@
+<!-- pages/start/start.wxml -->
+<view class="container">
+  <!-- 店铺名字 -->
+  <view class="shop-name-box">
+    <text class="shop-name-big">{{shopName}}</text>
+  </view>
+
+  <!-- 分类入口卡片 -->
+  <view class="category-card">
+    <view class="cate-item" bindtap="chooseDineIn">
+      <view class="cate-icon-wrap pickup">
+        <image class="cate-icon-img" src="/images/icons/icon_store.png" mode="aspectFit"></image>
+      </view>
+      <text class="cate-name">自提</text>
+    </view>
+    <view class="cate-item" bindtap="chooseTakeOut">
+      <view class="cate-icon-wrap delivery">
+        <image class="cate-icon-img" src="/images/icons/icon_delivery.png" mode="aspectFit"></image>
+      </view>
+      <text class="cate-name">外卖配送</text>
+    </view>
+  </view>
+
+  <!-- 店铺信息 -->
+  <view class="shop-card" wx:if="{{shopBusinessHours || shopAddress || shopIntro}}">
+    <view class="card-item" wx:if="{{shopBusinessHours}}">
+      <image class="card-icon-img" src="/images/icons/icon_clock.png" mode="aspectFit"></image>
+      <text class="card-text">{{shopBusinessHours}}</text>
+    </view>
+    <view class="card-item" wx:if="{{shopAddress}}">
+      <image class="card-icon-img" src="/images/icons/icon_location.png" mode="aspectFit"></image>
+      <text class="card-text">{{shopAddress}}</text>
+    </view>
+    <view class="card-item intro" wx:if="{{shopIntro}}">
+      <text class="intro-text">{{shopIntro}}</text>
+    </view>
+    <view class="card-item phone" wx:if="{{shopContactPhone}}" bindtap="callPhone">
+      <image class="card-icon-img" src="/images/icons/icon_phone.png" mode="aspectFit"></image>
+      <text class="card-text">{{shopContactPhone}}</text>
+    </view>
+  </view>
+
+  <!-- 宣传弹窗 -->
+  <view class="popup-mask" wx:if="{{showPopup}}" bindtap="closePopup">
+    <view class="popup-container" catchtap="stopPropagation">
+      <image class="popup-image" src="{{popupImage}}" mode="widthFix"></image>
+      <view class="close-btn" bindtap="closePopup">关闭</view>
+    </view>
+  </view>
+</view>

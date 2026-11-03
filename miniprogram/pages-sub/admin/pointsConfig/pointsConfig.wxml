@@ -1,0 +1,88 @@
+<!-- pages-sub/admin/pointsConfig/pointsConfig.wxml -->
+<view class="page">
+  <view class="form-item">
+    <view class="form-label">积分活动开关</view>
+    <switch checked="{{enable}}" bindchange="onEnableChange" color="#07c160" />
+  </view>
+
+  <view class="section-title">兑换规则列表</view>
+  <view class="rule-list">
+    <block wx:for="{{rules}}" wx:key="id">
+      <view class="rule-item">
+        <view class="rule-info">
+          <text class="rule-name">{{item.name}}</text>
+          <text class="rule-points">{{item.points}}积分</text>
+          <text class="rule-type">{{item.type === 'coupon' ? '优惠券' : '商品券'}}</text>
+        </view>
+        <view class="rule-actions">
+          <text class="edit" bindtap="editRule" data-index="{{index}}">编辑</text>
+          <text class="delete" bindtap="deleteRule" data-index="{{index}}">删除</text>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{rules.length === 0}}" class="empty-tip">暂无规则，点击下方按钮添加</view>
+  </view>
+
+  <button class="add-btn" type="primary" bindtap="addRule">添加兑换规则</button>
+
+  <!-- 弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" catchtap="closeModal">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">{{editIndex === -1 ? '添加规则' : '编辑规则'}}</view>
+      <scroll-view class="modal-content" scroll-y enhanced show-scrollbar>
+        <view class="modal-item">
+          <text>商品名称</text>
+          <input placeholder="如：10元优惠券" value="{{form.name}}" bindinput="onNameInput" />
+        </view>
+        <view class="modal-item">
+          <text>所需积分</text>
+          <input type="number" placeholder="积分数量" value="{{form.points}}" bindinput="onPointsInput" />
+        </view>
+        <view class="modal-item">
+          <text>兑换类型</text>
+          <radio-group bindchange="onTypeChange">
+            <label><radio value="coupon" checked="{{form.type === 'coupon'}}" />优惠券</label>
+            <label><radio value="product" checked="{{form.type === 'product'}}" />商品券</label>
+          </radio-group>
+        </view>
+        <!-- 优惠券选择 -->
+        <view class="modal-item" wx:if="{{form.type === 'coupon'}}">
+          <text>选择优惠券</text>
+          <picker mode="selector" range="{{couponList}}" range-key="name" bindchange="onCouponChange">
+            <view class="picker-display">
+              <text wx:if="{{form.couponId}}">{{form.couponName}}</text>
+              <text wx:else class="placeholder">请选择优惠券</text>
+            </view>
+          </picker>
+        </view>
+        <!-- 商品券选择 -->
+        <view class="modal-item" wx:if="{{form.type === 'product'}}">
+          <text>选择商品</text>
+          <picker mode="selector" range="{{dishList}}" range-key="name" bindchange="onProductChange">
+            <view class="picker-display">
+              <text wx:if="{{form.productId}}">{{form.productName}}</text>
+              <text wx:else class="placeholder">请选择商品</text>
+            </view>
+          </picker>
+        </view>
+        <view class="modal-item">
+          <text>描述（选填）</text>
+          <input placeholder="描述" value="{{form.description}}" bindinput="onDescriptionInput" />
+        </view>
+        <!-- 图片上传 -->
+        <view class="modal-item">
+          <text>商品图片</text>
+          <view class="image-upload" bindtap="uploadImage">
+            <image wx:if="{{form.image}}" src="{{form.image}}" mode="aspectFill"></image>
+            <view wx:else class="upload-placeholder">+ 点击上传图片</view>
+          </view>
+          <view wx:if="{{form.image}}" class="remove-image" catchtap="removeImage">删除图片</view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closeModal">取消</view>
+        <view class="modal-btn confirm" bindtap="saveRule">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

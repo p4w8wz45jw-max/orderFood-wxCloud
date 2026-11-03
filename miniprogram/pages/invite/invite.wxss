@@ -1,0 +1,192 @@
+/* pages/invite/invite.wxss - 温暖奶油风 */
+.page {
+  min-height: 100vh;
+  background: #F5EDE4;
+}
+
+.invite-content {
+  padding-bottom: 40rpx;
+}
+
+/* 头部奖励展示 */
+.reward-header {
+  padding: 60rpx 40rpx 50rpx;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 0 40rpx 40rpx;
+}
+
+.reward-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.reward-title {
+  font-size: 44rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+}
+
+.reward-desc {
+  font-size: 28rpx;
+  opacity: 0.9;
+  margin-bottom: 40rpx;
+  line-height: 1.5;
+}
+
+.reward-coupon-box {
+  display: flex;
+  justify-content: center;
+}
+
+.coupon-card {
+  display: flex;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  overflow: hidden;
+  width: 500rpx;
+  box-shadow: 0 8rpx 24rpx rgba(139,115,85,0.12);
+}
+
+.coupon-left {
+  flex: 1;
+  padding: 30rpx 24rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.coupon-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 8rpx;
+}
+
+.coupon-desc {
+  font-size: 24rpx;
+  color: #A09888;
+}
+
+.coupon-right {
+  width: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  writing-mode: vertical-rl;
+}
+
+.coupon-btn-text {
+  font-size: 28rpx;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* 邀请步骤 */
+.steps-section {
+  background: #FFFBF7;
+  margin: 24rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.05);
+  border: 1rpx solid rgba(160,128,96,0.06);
+}
+
+.step-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 30rpx;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 28rpx;
+}
+
+.step-item:last-child {
+  margin-bottom: 0;
+}
+
+.step-num {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.step-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #8B7355;
+  line-height: 1.6;
+  padding-top: 6rpx;
+}
+
+/* 规则说明 */
+.rules-section {
+  background: #FFFBF7;
+  margin: 0 24rpx 24rpx;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.05);
+  border: 1rpx solid rgba(160,128,96,0.06);
+}
+
+.rules-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 20rpx;
+}
+
+.rule-item {
+  font-size: 26rpx;
+  color: #A09888;
+  line-height: 1.8;
+  padding: 4rpx 0;
+}
+
+/* 操作按钮 */
+.action-section {
+  padding: 40rpx 40rpx 20rpx;
+  text-align: center;
+}
+
+.invite-btn {
+  width: 100%;
+  height: 90rpx;
+  border-radius: 50rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: bold;
+  border: none;
+  line-height: 90rpx;
+}
+
+.invite-btn::after {
+  border: none;
+}
+
+.share-tip {
+  font-size: 26rpx;
+  color: #B8956E;
+  margin-top: 20rpx;
+  text-align: center;
+}
+
+.view-records {
+  font-size: 28rpx;
+  color: #8B7355;
+  margin-top: 30rpx;
+  text-align: center;
+  padding: 16rpx;
+}

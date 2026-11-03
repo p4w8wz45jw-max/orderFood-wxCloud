@@ -1,0 +1,65 @@
+<!--pages/invite/invite.wxml-->
+<view class="page">
+  <!-- 未开启时 -->
+  <van-empty wx:if="{{!inviteEnabled}}" description="邀请有奖活动暂未开启" />
+
+  <!-- 已开启 -->
+  <view wx:if="{{inviteEnabled}}" class="invite-content">
+    <!-- 头部奖励展示 -->
+    <view class="reward-header" style="background: linear-gradient(135deg, {{themeColor}}, {{themeColor}}dd);">
+      <view class="reward-icon"></view>
+      <view class="reward-title">邀请有奖</view>
+      <view class="reward-desc">{{inviteDesc}}</view>
+      <view class="reward-coupon-box" wx:if="{{rewardCoupon}}">
+        <view class="coupon-card">
+          <view class="coupon-left">
+            <text class="coupon-name">{{rewardCoupon.name}}</text>
+            <text class="coupon-desc">{{rewardCoupon.desc}}</text>
+          </view>
+          <view class="coupon-right" style="background-color: {{themeColor}};">
+            <text class="coupon-btn-text">奖励</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 邀请步骤 -->
+    <view class="steps-section">
+      <view class="step-title">邀请流程</view>
+      <view class="step-item">
+        <view class="step-num" style="background-color: {{themeColor}};">1</view>
+        <view class="step-text">点击下方按钮，分享邀请卡给好友</view>
+      </view>
+      <view class="step-item">
+        <view class="step-num" style="background-color: {{themeColor}};">2</view>
+        <view class="step-text">好友通过邀请卡进入小程序并下单</view>
+      </view>
+      <view class="step-item">
+        <view class="step-num" style="background-color: {{themeColor}};">3</view>
+        <view class="step-text">好友下单成功后，好友将自动获得奖励优惠券</view>
+      </view>
+    </view>
+
+    <!-- 规则说明 -->
+    <view class="rules-section">
+      <view class="rules-title">活动规则</view>
+      <view class="rule-item">1. 每个新用户仅可通过邀请卡获得一次奖励</view>
+      <view class="rule-item">2. 被邀请用户必须是从未在本店下单过的新用户</view>
+      <view class="rule-item">3. 奖励优惠券将在新用户下单成功后自动到账</view>
+      <view class="rule-item">4. 优惠券可在"我的优惠券"中查看和使用</view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-section">
+      <button class="invite-btn" style="background-color: {{themeColor}};" open-type="share" bindtap="inviteFriend">
+        邀请好友下单
+      </button>
+      <view class="share-tip" wx:if="{{showShareTip}}">
+        点击右上角"..."分享给好友
+      </view>
+      <view class="view-records" bindtap="viewInviteRecords">
+        查看我的邀请记录 >
+      </view>
+    </view>
+  </view>
+</view>

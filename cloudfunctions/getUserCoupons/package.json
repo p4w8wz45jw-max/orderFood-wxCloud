@@ -1,0 +1,9 @@
+{
+  "name": "getUserCoupons",
+  "version": "1.0.0",
+  "description": "后台会员管理：查询用户优惠券",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,18 @@
+<!-- pages-sub/admin/notice/notice.wxml -->
+<view class="page">
+  <!-- 充值活动说明区域 -->
+  <view class="section">
+    <view class="section-title">
+      <text>💰</text>
+      <text>充值活动说明</text>
+    </view>
+    <textarea 
+      class="recharge-input" 
+      placeholder="请输入充值活动说明内容，支持换行&#10;例如：&#10;1. 充值满100元送10元&#10;2. 充值一次赠送一次抽奖机会"
+      value="{{rechargeNotice}}"
+      bindinput="onRechargeNoticeInput"
+    />
+    <button class="save-btn" type="primary" bindtap="saveRechargeNotice">保存充值说明</button>
+  </view>
+
+</view>

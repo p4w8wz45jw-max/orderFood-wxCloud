@@ -1,0 +1,55 @@
+/* pages/address/list/list.wxss - 温暖奶油风 */
+.container {
+    padding: 20rpx;
+    padding-bottom: 120rpx;
+}
+.address-item {
+    background: #FFFBF7;
+    border-radius: 16rpx;
+    padding: 30rpx;
+    margin-bottom: 20rpx;
+    box-shadow: 0 2rpx 10rpx rgba(139,115,85,0.05);
+    border: 1rpx solid rgba(160,128,96,0.06);
+}
+.name-phone {
+    font-size: 32rpx;
+    font-weight: bold;
+    color: #5C4A3A;
+    margin-bottom: 10rpx;
+}
+.detail {
+    font-size: 28rpx;
+    color: #8B7355;
+    margin: 16rpx 0;
+}
+.default-tag {
+    display: inline-block;
+    background: #6B9E6B;
+    color: #fff;
+    font-size: 24rpx;
+    padding: 4rpx 12rpx;
+    border-radius: 20rpx;
+}
+.actions {
+    margin-top: 20rpx;
+    display: flex;
+    justify-content: flex-end;
+    gap: 20rpx;
+}
+.empty {
+    text-align: center;
+    margin-top: 100rpx;
+    color: #A09888;
+}
+.add-btn {
+    position: fixed;
+    bottom: 30rpx;
+    left: 5%;
+    width: 90%;
+    background-color: #B8956E;
+    color: #fff;
+    border-radius: 50rpx;
+}
+.selectable {
+    cursor: pointer;
+}

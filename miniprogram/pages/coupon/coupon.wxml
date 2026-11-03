@@ -1,0 +1,28 @@
+<!-- pages/coupon/coupon.wxml -->
+<view class="container">
+  <view class="tabs">
+    <view class="tab {{status === 'unused' ? 'active' : ''}}" style="{{status === 'unused' ? 'color: ' + themeColor + '; border-bottom-color: ' + themeColor : ''}}" bindtap="switchTab" data-status="unused">未使用</view>
+    <view class="tab {{status === 'used' ? 'active' : ''}}" style="{{status === 'used' ? 'color: ' + themeColor + '; border-bottom-color: ' + themeColor : ''}}" bindtap="switchTab" data-status="used">已使用</view>
+    <view class="tab {{status === 'expired' ? 'active' : ''}}" style="{{status === 'expired' ? 'color: ' + themeColor + '; border-bottom-color: ' + themeColor : ''}}" bindtap="switchTab" data-status="expired">已过期</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:else>
+    <view class="coupon-list">
+      <block wx:for="{{coupons}}" wx:key="_id">
+        <view class="coupon-item" style="border-left: 8rpx solid {{themeColor}};">
+          <view class="coupon-left">
+            <text class="coupon-value" style="color: {{themeColor}};">{{item.valueText}}</text>
+            <text class="coupon-name">{{item.name}}</text>
+          </view>
+          <view class="coupon-right">
+            <text class="coupon-expire">有效期至：{{item.expireText}}</text>
+            <button class="use-btn" wx:if="{{!item.used && !item.isExpired}}" style="background-color: {{themeColor}};" bindtap="useCoupon" data-coupon="{{item}}">去使用</button>
+            <text wx:else>{{item.used ? '已使用' : '已过期'}}</text>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{coupons.length === 0}}" class="empty">暂无优惠券</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+{
+  "name": "miniprogram",
+  "version": "1.0.0",
+  "description": "为了确保页面在获取到用户OpenID后再进行加载，我们在app.js中实现了全局拦截器。该方案无需在每个页面都添加对checkOpenid的调用，大大简化了开发工作。",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@vant/weapp": "^1.11.7"
+  }
+}

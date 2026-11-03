@@ -1,0 +1,29 @@
+<view class="container">
+  <form bindsubmit="saveAddress">
+    <view class="form-item">
+      <text>收货人</text>
+      <input placeholder="姓名" bindinput="onNameInput" value="{{name}}" />
+    </view>
+    <view class="form-item">
+      <text>手机号</text>
+      <input type="number" placeholder="手机号" bindinput="onPhoneInput" value="{{phone}}" />
+    </view>
+    <view class="form-item">
+      <text>位置</text>
+      <button type="default" size="mini" bindtap="chooseLocation" style="flex:1; margin:0;">选择位置</button>
+    </view>
+    <view class="form-item" wx:if="{{locationName}}">
+      <text>已选位置</text>
+      <text style="flex:1; color:#07c160;">{{locationName}}</text>
+    </view>
+    <view class="form-item">
+      <text>详细地址</text>
+      <input placeholder="例：3号楼201室" bindinput="onDetailInput" value="{{detail}}" />
+    </view>
+    <view class="form-item switch-item">
+      <text>设为默认地址</text>
+      <switch bindchange="onDefaultChange" checked="{{isDefault}}" color="#07c160" />
+    </view>
+    <button formType="submit" type="primary" class="save-btn">保存地址</button>
+  </form>
+</view>

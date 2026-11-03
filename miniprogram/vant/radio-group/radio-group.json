@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "van-radio": "/vant/radio/index"
+  }
+}

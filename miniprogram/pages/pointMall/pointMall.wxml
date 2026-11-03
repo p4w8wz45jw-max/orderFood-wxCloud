@@ -1,0 +1,66 @@
+<!-- pages/pointMall/pointMall.wxml -->
+<view class="container">
+  <view class="points-header" style="background-color: {{themeColor}};" bindtap="showPointsDetail">
+    <text class="points-balance">我的积分：{{userPoints}}  <text class="points-arrow">›</text></text>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view class="goods-list" wx:else>
+    <block wx:for="{{rules}}" wx:key="id">
+      <view class="goods-item" bindtap="exchange" data-rule="{{item}}">
+        <image class="goods-img" src="{{item.image || 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'}}" mode="aspectFill"></image>
+        <view class="goods-info">
+          <view class="goods-name">{{item.name}}</view>
+          <view class="goods-desc">{{item.description || '兑换礼品'}}</view>
+          <view class="goods-points">{{item.points}}积分</view>
+        </view>
+        <view class="exchange-btn">兑换</view>
+      </view>
+    </block>
+    <view wx:if="{{rules.length === 0}}" class="empty">暂无兑换商品</view>
+  </view>
+
+  <!-- 积分明细弹窗 -->
+  <view class="modal-mask" wx:if="{{showPointsDetail}}" catchtap="closePointsDetail">
+    <view class="modal-dialog points-detail-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>积分明细</text>
+        <view class="points-total">
+          当前积分: <text class="points-total-num">{{userPoints}}</text>
+        </view>
+      </view>
+      <scroll-view class="points-detail-content" scroll-y>
+        <view wx:if="{{pointsDetailLoading}}" class="points-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{pointsHistory.length === 0}}" class="points-empty">
+          <text>暂无积分变动记录</text>
+        </view>
+        <view wx:else class="points-list">
+          <view class="points-item" wx:for="{{pointsHistory}}" wx:key="id">
+            <view class="points-item-left">
+              <view class="points-item-icon {{item.isIncome ? 'income-icon' : 'expense-icon'}}">
+                <text wx:if="{{item.type === 'earn'}}">🎁</text>
+                <text wx:elif="{{item.type === 'spend'}}">🎫</text>
+                <text wx:elif="{{item.type === 'refund_deduct'}}">💸</text>
+                <text wx:elif="{{item.type === 'admin_adjust'}}">✏️</text>
+                <text wx:else>📌</text>
+              </view>
+              <view class="points-item-info">
+                <view class="points-item-desc">{{item.reason}}</view>
+                <view class="points-item-date">{{item.date}}</view>
+              </view>
+            </view>
+            <view class="points-item-amount {{item.isIncome ? 'income' : 'expense'}}">
+              {{item.isIncome ? '+' : ''}}{{item.amount}}
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closePointsDetail">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

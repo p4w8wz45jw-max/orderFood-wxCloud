@@ -1,0 +1,68 @@
+<!--pages/lottery/lottery.wxml-->
+<view class="container" style="background-image: url({{bgImage}}); background-size: cover; background-position: center; min-height: 100vh;">
+  <view class="header">
+    <view class="title" style="color: {{themeColor}};">幸运大转盘</view>
+    <view class="info" style="background-color: {{themeColor}};">剩余抽奖机会：{{lotteryChance}}</view>
+  </view>
+
+  <view class="wheel-container" wx:if="{{!showRecords}}">
+    <canvas type="2d" id="wheelCanvas" class="wheel-canvas" style="width: {{canvasWidth}}rpx; height: {{canvasHeight}}rpx;"></canvas>
+    <view class="pointer" bindtap="startLottery">
+      <text class="pointer-text">开始</text>
+    </view>
+  </view>
+
+  <!-- 抽奖记录入口 -->
+  <view class="records-entry" bindtap="openRecords">
+    <text>📜 我的抽奖记录</text>
+    <text class="records-entry-arrow">›</text>
+  </view>
+
+  <!-- 奖品一览 -->
+  <view class="prize-overview" wx:if="{{prizes.length > 0}}">
+    <view class="prize-title">🎁 奖品一览</view>
+    <view class="prize-list">
+      <view class="prize-item" wx:for="{{prizes}}" wx:key="index">
+        <image class="prize-img" src="{{item.imageTempUrl}}" mode="aspectFill" wx:if="{{item.imageTempUrl}}" />
+        <text class="prize-emoji" wx:elif="{{item.type === 'thanks'}}">🙏</text>
+        <text class="prize-emoji" wx:elif="{{item.type === 'coupon'}}">🎫</text>
+        <text class="prize-emoji" wx:elif="{{item.type === 'product'}}">🛒</text>
+        <text class="prize-emoji" wx:else>🎁</text>
+        <view class="prize-info">
+          <text class="prize-name">{{item.name}}</text>
+          <text class="prize-type" wx:if="{{item.type === 'thanks'}}">谢谢参与</text>
+          <text class="prize-type" wx:elif="{{item.type === 'coupon'}}">优惠券</text>
+          <text class="prize-type" wx:elif="{{item.type === 'product'}}">商品券</text>
+          <text class="prize-type" wx:else>实物奖品</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 抽奖记录弹窗 -->
+  <view class="records-mask" wx:if="{{showRecords}}" catchtap="closeRecords">
+    <view class="records-modal" catchtap="stopPropagation">
+      <view class="records-header">
+        <text class="records-title">📜 我的抽奖记录</text>
+        <text class="records-close" catchtap="closeRecords">✕</text>
+      </view>
+      <scroll-view class="records-list" scroll-y>
+        <view class="records-empty" wx:if="{{!recordLoading && records.length === 0}}">暂无抽奖记录，快去试试手气吧～</view>
+        <view class="records-loading" wx:if="{{recordLoading}}">加载中...</view>
+        <view class="record-item" wx:for="{{records}}" wx:key="_id">
+          <text class="record-emoji">{{item.type === 'thanks' ? '🙏' : (item.type === 'coupon' ? '🎫' : (item.type === 'product' ? '🛒' : '🎁'))}}</text>
+          <view class="record-info">
+            <view class="record-name-row">
+              <text class="record-name">{{item.prize}}</text>
+              <text class="record-type">{{item.type === 'thanks' ? '谢谢参与' : (item.type === 'coupon' ? '优惠券' : (item.type === 'product' ? '商品券' : '奖品'))}}</text>
+            </view>
+            <view class="record-meta">
+              <text class="record-time">{{item.timeText}}</text>
+              <text class="record-coupon-status" wx:if="{{item.couponStatus}}">{{item.couponStatus}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,44 @@
+/* pages-sub/admin/payConfig/payConfig.wxss */
+.page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 30rpx;
+  box-sizing: border-box;
+}
+.form-section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 30rpx;
+}
+.form-item {
+  margin-bottom: 40rpx;
+}
+.form-label {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 16rpx;
+  color: #333;
+}
+.form-input {
+  width: 100%;
+  border: 1rpx solid #ddd;
+  padding: 24rpx;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  background: #fafafa;
+  box-sizing: border-box;
+}
+.tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+.save-btn {
+  background: #07c160;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  padding: 24rpx;
+  margin-top: 20rpx;
+  width: 100%;
+}

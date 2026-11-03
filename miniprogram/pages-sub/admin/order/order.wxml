@@ -1,0 +1,115 @@
+<!-- pages-sub/admin/order/order.wxml -->
+<view class="page">
+  <view class="filter-bar">
+    <view class="refresh-bar">
+      <view class="refresh-btn" bindtap="loadOrders">刷新</view>
+      <view class="refresh-btn" bindtap="backfillCouponSource">补全来源</view>
+      <view class="refresh-tip">下拉也可刷新</view>
+    </view>
+  </view>
+
+  <scroll-view class="order-list" scroll-y>
+    <view class="order-item" wx:for="{{orders}}" wx:key="_id" bindtap="goOrderDetail" data-order="{{item}}">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <view class="order-user-info">
+          <image class="user-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+          <view class="user-info-text">
+            <view class="user-name">{{item.userNickName || '匿名用户'}}</view>
+            <view class="user-phone" catchtap="callPhone" data-phone="{{item.userPhone}}">📞 {{item.userPhone || '无手机号'}}</view>
+          </view>
+        </view>
+      <view class="order-type-wrap">
+        <view class="order-type">{{item.orderTypeText}}</view>
+        <!-- 支付方式标签 -->
+        <view class="pay-method-tag" wx:if="{{item.payStatus || item.status === 'paid'}}">
+          {{item.type === 'seckill' ? '秒杀支付' : (item.useMiandan ? '免单' : (item.wechatPaid > 0 && item.balancePaid > 0 ? '混合支付' : (item.wechatPaid > 0 ? '微信' : '余额')))}}
+        </view>
+      </view>
+      </view>
+
+      <!-- 退款/取消状态标签 -->
+      <view class="refund-badge" wx:if="{{item.status === 'refunded' || item.status === 'cancelled' || item.status === 'refunding' || item.status === 4 || item.status === 3 || item.refundTime}}">
+        <text>{{item.status === 'cancelled' || item.status === 3 ? '已取消' : (item.status === 'refunding' ? '退款中' : '已退款')}}</text>
+      </view>
+
+      <!-- 订单内容 -->
+      <view class="order-content">
+        <!-- 秒杀订单标记 -->
+        <view wx:if="{{item.type === 'seckill'}}" class="seckill-banner">
+          <text class="seckill-icon">⚡</text>
+          <text class="seckill-banner-text">秒杀订单：{{item.seckillTitle}}</text>
+        </view>
+        <view class="time-label-row" wx:if="{{item.selectedTime}}">
+          <text class="time-label">{{item.orderType === 'takeout' ? '配送时间：' : '取餐时间：'}}</text>
+          <text class="time-value">{{item.selectedTime}}</text>
+        </view>
+        <!-- 外卖配送地址 -->
+        <view class="delivery-addr-row" wx:if="{{item.orderType === 'takeout' && item.shippingAddress}}">
+          <view class="delivery-addr-text">
+            <text class="addr-label">配送至：</text>
+            <text>{{item.shippingAddress.locationName || item.shippingAddress.address || item.shippingAddress.detail}}</text>
+            <text wx:if="{{item.shippingAddress.detail && item.shippingAddress.locationName && item.shippingAddress.locationName !== item.shippingAddress.detail}}"> {{item.shippingAddress.detail}}</text>
+          </view>
+        </view>
+        <block wx:if="{{item.type === 'recharge'}}">
+          <view class="recharge-info">
+            <view class="recharge-item">
+              <text class="recharge-label">充值金额</text>
+              <text class="recharge-value">¥{{item.amount}}</text>
+            </view>
+            <view class="recharge-item">
+              <text class="recharge-label">赠送金额</text>
+              <text class="recharge-value gift">¥{{item.giveAmount}}</text>
+            </view>
+            <view class="recharge-item">
+              <text class="recharge-label">到账金额</text>
+              <text class="recharge-value total">¥{{item.totalGet}}</text>
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="goods-list">
+            <view class="goods-item" wx:for="{{item.goodsList}}" wx:key="dishId">
+              <view class="goods-name">{{item.dishName}}</view>
+              <view class="goods-price">¥{{item.price}} x{{item.count}}</view>
+            </view>
+          </view>
+          <view class="coupon-info-row" wx:if="{{item.couponName}}">
+            <text class="coupon-name">优惠券：{{item.couponName}}</text>
+            <text class="coupon-source-tag" wx:if="{{item.couponSourceText}}">来源：{{item.couponSourceText}}</text>
+          </view>
+          <view class="order-total">
+            <text>合计：</text>
+            <text class="total-price">¥{{item.finalPrice}}</text>
+            <block wx:if="{{item.payStatus || item.status === 'paid'}}">
+              <text wx:if="{{item.balancePaid > 0}}" class="pay-detail">（余额¥{{item.balancePaid}}</text>
+              <text wx:if="{{item.wechatPaid > 0}}" class="pay-detail">{{item.balancePaid > 0 ? ' + ' : '（'}}微信¥{{item.wechatPaid}}）</text>
+            </block>
+          </view>
+        </block>
+      </view>
+
+      <!-- 订单底部 -->
+      <view class="order-footer">
+        <view class="order-time">{{item.createTimeText}}</view>
+        <view class="order-actions">
+          <button class="reprint-btn" size="mini" type="primary" catchtap="reprint" data-order="{{item}}">重新打印</button>
+          <!-- 退款按钮：使用 JS 计算的 canRefund 控制 -->
+          <button 
+            wx:if="{{item.canRefund}}"
+            class="refund-btn" 
+            size="mini" 
+            catchtap="refundOrder" 
+            data-order="{{item}}"
+            data-index="{{index}}"
+            disabled="{{refundingId}}">{{refundingId === item._id ? '退款中...' : '退款'}}</button>
+          <!-- 退款中状态 -->
+          <view wx:elif="{{item.status === 'refunding'}}" class="refunded-text">退款处理中...</view>
+          <!-- 已退款/已取消状态 -->
+          <view wx:elif="{{item.status === 'refunded' || item.status === 'cancelled' || item.status === 4 || item.status === 3 || item.refundTime}}" class="refunded-text">{{item.status === 'cancelled' || item.status === 3 ? '已取消' : '已退款'}}</view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

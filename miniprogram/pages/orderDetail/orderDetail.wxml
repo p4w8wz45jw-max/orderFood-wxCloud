@@ -1,0 +1,130 @@
+<view class="container" wx:if="{{order}}">
+  <!-- 订单状态栏 -->
+  <view class="status-bar" style="background-color: {{order.statusColor || themeColor}};">
+    <text class="status-text">{{order.statusText}}</text>
+  </view>
+
+  <!-- 用户信息 -->
+  <view class="info-card">
+    <view class="card-title">
+      <text>用户信息</text>
+      <view class="copy-info-btn" bindtap="copyUserInfo">复制信息</view>
+    </view>
+    <view class="info-row">
+      <text class="label">昵称：</text>
+      <text>{{order.userNickName || '未设置'}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.userPhone}}">
+      <text class="label">手机号：</text>
+      <text class="phone-value" bindtap="callPhone" data-phone="{{order.userPhone}}">📞 {{order.userPhone}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.orderType === 'takeout' && order.shippingAddress}}">
+      <text class="label">收货地址：</text>
+      <text>{{order.shippingAddress.locationName || ''}} {{order.shippingAddress.address || order.shippingAddress.detail || ''}}</text>
+    </view>
+  </view>
+
+  <!-- 外卖配送信息 -->
+  <view class="info-card" wx:if="{{order.orderType === 'takeout' && order.shippingAddress}}">
+    <view class="card-title">配送信息</view>
+    <view class="info-row">
+      <text class="label">收货人：</text>
+      <text class="receiver-name">{{order.shippingAddress.name}}</text>
+      <text wx:if="{{order.shippingAddress.phone}}" class="phone-value" bindtap="callPhone" data-phone="{{order.shippingAddress.phone}}">📞 {{order.shippingAddress.phone}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">收货地址：</text>
+      <text>{{order.shippingAddress.address || order.shippingAddress.detail}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.deliveryFee > 0}}">
+      <text class="label">配送费：</text>
+      <text>¥{{order.deliveryFee}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.selectedTime}}">
+      <text class="label">配送时间：</text>
+      <text>{{order.selectedTime}}</text>
+    </view>
+  </view>
+
+  <!-- 堂食信息 -->
+  <view class="info-card" wx:if="{{order.orderType === 'dineIn' && order.tableNumber}}">
+    <view class="card-title">用餐信息</view>
+    <view class="info-row">
+      <text class="label">堂食/自取</text>
+      <text>桌号：{{order.tableNumber}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.selectedTime}}">
+      <text class="label">取餐时间：</text>
+      <text>{{order.selectedTime}}</text>
+    </view>
+  </view>
+
+  <!-- 商品列表 -->
+  <view class="goods-card">
+    <view class="card-title">商品明细</view>
+    <view class="goods-item" wx:for="{{order.goodsList}}" wx:key="dishId">
+      <image class="goods-image" src="{{item.dishImage}}" mode="aspectFill"></image>
+      <view class="goods-info">
+        <text class="goods-name">{{item.dishName}}</text>
+        <view class="goods-tags" wx:if="{{item.tags && item.tags.length > 0}}">
+          <text class="goods-tag" wx:for="{{item.tags}}" wx:key="index" wx:for-item="tagVal">{{tagVal}}</text>
+        </view>
+        <view class="goods-price-row">
+          <text class="goods-price">¥{{item.price}}</text>
+          <text class="goods-count">×{{item.count}}</text>
+        </view>
+      </view>
+      <view class="goods-subtotal">¥{{item.subtotal}}</view>
+    </view>
+    <view class="total-row">
+      <text>合计</text>
+      <text>¥{{order.goodsSubtotal}}</text>
+    </view>
+    <!-- 费用明细 -->
+    <view class="breakdown-section" wx:if="{{order.totalDiscountText || order.deliveryFee > 0}}">
+      <view class="breakdown-title">费用明细</view>
+      <view class="breakdown-row" wx:if="{{order.hasBalanceDiscount}}">
+        <text>会员卡优惠</text>
+        <text class="discount-val">-¥{{order.balanceDiscountText}}</text>
+      </view>
+      <view class="breakdown-row" wx:if="{{order.couponInfo}}">
+        <text class="coupon-name">{{order.couponInfo.name}}（{{order.couponInfo.typeText}}<text wx:if="{{order.couponInfo.sourceText}}"> · 来源：{{order.couponInfo.sourceText}}</text>）</text>
+        <text class="discount-val">-¥{{order.totalDiscountText}}</text>
+      </view>
+      <view class="breakdown-row" wx:if="{{order.totalDiscountText && !order.couponInfo}}">
+        <text>优惠</text>
+        <text class="discount-val">-¥{{order.totalDiscountText}}</text>
+      </view>
+      <view class="breakdown-row" wx:if="{{order.deliveryFee > 0}}">
+        <text>配送费</text>
+        <text>¥{{order.deliveryFee}}</text>
+      </view>
+      <view class="breakdown-row total">
+        <text>实付</text>
+        <text class="final-val">¥{{order.finalPrice}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单信息 -->
+  <view class="info-card">
+    <view class="card-title">订单信息</view>
+    <view class="info-row">
+      <text class="label">订单号：</text>
+      <text>{{order._id}}</text>
+    </view>
+    <view class="info-row">
+      <text class="label">下单时间：</text>
+      <text>{{order.createTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.selectedTime}}">
+      <text class="label">{{order.orderType === 'takeout' ? '配送时间' : '取餐时间'}}：</text>
+      <text>{{order.selectedTime}}</text>
+    </view>
+    <view class="info-row" wx:if="{{order.remark}}">
+      <text class="label">备注：</text>
+      <text>{{order.remark}}</text>
+    </view>
+  </view>
+</view>
+<view wx:else class="empty-tip">加载中...</view>

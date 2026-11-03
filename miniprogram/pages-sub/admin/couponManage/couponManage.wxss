@@ -1,0 +1,230 @@
+/* pages-sub/admin/couponManage/couponManage.wxss */
+page {
+  background: #f5f5f5;
+}
+.page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+
+.tabs {
+  display: flex;
+  background: white;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  border-bottom: 4rpx solid transparent;
+}
+.tab.active {
+  color: #e54d42;
+  border-bottom-color: #e54d42;
+  font-weight: bold;
+}
+
+.header-bar {
+  margin-bottom: 20rpx;
+}
+.add-btn {
+  background: #07c160;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  padding: 16rpx;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+}
+
+.coupon-list,
+.package-list {
+  background: white;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+.coupon-card,
+.package-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-bottom: 1rpx solid #eee;
+  flex-wrap: wrap;
+}
+.coupon-info,
+.package-info {
+  flex: 1;
+  margin-right: 20rpx;
+  overflow: hidden;
+}
+.coupon-name,
+.package-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8rpx;
+  word-break: break-all;
+}
+.package-price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff6b6b;
+  display: inline-block;
+  margin-left: 16rpx;
+}
+.coupon-type,
+.coupon-detail,
+.coupon-expire,
+.package-detail,
+.package-expire {
+  font-size: 26rpx;
+  color: #666;
+  display: block;
+  margin-top: 6rpx;
+  word-break: break-all;
+}
+.coupon-status,
+.package-status {
+  font-size: 24rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  display: inline-block;
+  margin-top: 10rpx;
+}
+.coupon-status.on,
+.package-status.on {
+  background: #e8f7e8;
+  color: #07c160;
+}
+.coupon-status.off,
+.package-status.off {
+  background: #fff0f0;
+  color: #ff6b6b;
+}
+.coupon-actions,
+.package-actions {
+  display: flex;
+  gap: 24rpx;
+  flex-shrink: 0;
+}
+.edit {
+  color: #07c160;
+  font-size: 28rpx;
+}
+.delete {
+  color: #ff6b6b;
+  font-size: 28rpx;
+}
+.empty {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+}
+
+/* ========== 弹窗样式（最终版，强制高优先级） ========== */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.modal-dialog {
+  width: 85%;
+  max-width: 600rpx;
+  background: white;
+  border-radius: 24rpx;
+  height: 70vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-title {
+  text-align: center;
+  padding: 30rpx;
+  font-size: 36rpx;
+  font-weight: bold;
+  border-bottom: 1rpx solid #eee;
+  background: white;
+  flex-shrink: 0;
+}
+.modal-content-scroll {
+  flex: 1;
+  padding: 30rpx;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.form-item {
+  margin-bottom: 40rpx;
+}
+.form-item text {
+  display: block;
+  font-size: 30rpx;
+  margin-bottom: 16rpx;
+  color: #333;
+  font-weight: 500;
+}
+/* 强制输入框和文本框样式 */
+.form-item input,
+.form-item textarea,
+.form-item picker {
+  width: 100%;
+  border: 1rpx solid #ddd !important;
+  border-radius: 16rpx !important;
+  font-size: 30rpx !important;
+  background: #ffffff !important;
+  color: #000000 !important;
+  box-sizing: border-box;
+  padding: 24rpx 20rpx !important;
+  line-height: 1.4 !important;
+  min-height: 90rpx !important;
+}
+.form-item textarea {
+  height: auto;
+  min-height: 90rpx;
+}
+.form-item input::placeholder,
+.form-item textarea::placeholder {
+  color: #aaaaaa !important;
+  -webkit-text-fill-color: #aaaaaa !important;
+}
+.form-item picker view {
+  width: 100%;
+  background: #ffffff;
+  color: #000000;
+  padding: 24rpx 20rpx;
+  border-radius: 16rpx;
+}
+.modal-footer {
+  display: flex;
+  border-top: 1rpx solid #eee;
+  background: white;
+  flex-shrink: 0;
+}
+.modal-footer .btn {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.modal-footer .cancel {
+  color: #666;
+  border-right: 1rpx solid #eee;
+}
+.modal-footer .confirm {
+  color: #07c160;
+}

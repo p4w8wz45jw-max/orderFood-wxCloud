@@ -1,0 +1,195 @@
+/* pages/admin/admin.wxss - 温暖奶油风 */
+.page {
+  min-height: 100vh;
+  background: #F5EDE4;
+  padding-bottom: 40rpx;
+}
+
+/* 头部 */
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 80rpx 30rpx 60rpx;
+  color: white;
+}
+
+.header-title {
+  font-size: 48rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.header-subtitle {
+  font-size: 28rpx;
+  opacity: 0.9;
+}
+
+/* 菜单区域 */
+.menu-section {
+  margin: 30rpx;
+  background: #FFFBF7;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(139, 115, 85, 0.06);
+  border: 1rpx solid rgba(160, 128, 96, 0.08);
+  padding: 30rpx 0;
+}
+
+.section-title {
+  padding: 0 30rpx 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+}
+
+/* 返回按钮 */
+.back-btn {
+  margin: 30rpx;
+  padding: 30rpx;
+  background: #FFFBF7;
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: 32rpx;
+  color: #8B7355;
+}
+
+/* 密码输入弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(92, 74, 58, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-dialog {
+  width: 600rpx;
+  background: #FFFBF7;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.modal-title {
+  padding: 40rpx 30rpx 20rpx;
+  text-align: center;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+}
+
+.modal-content {
+  padding: 20rpx 30rpx 40rpx;
+}
+
+.password-input {
+  width: 100%;
+  height: 80rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+}
+
+.password-input:last-child {
+  margin-bottom: 0;
+}
+
+.modal-footer {
+  display: flex;
+  border-top: 2rpx solid #e5e5e5;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+}
+
+.modal-btn.cancel {
+  color: #999;
+  border-right: 2rpx solid #e5e5e5;
+}
+
+.modal-btn.confirm {
+  color: #667eea;
+  font-weight: bold;
+}
+
+/* ========== 以下是原生网格布局（不使用 Vant 时用） ========== */
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10rpx;
+}
+
+.grid-item {
+  width: 33.33%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+  box-sizing: border-box;
+}
+
+.icon {
+  font-size: 56rpx;
+  margin-bottom: 16rpx;
+}
+
+.text {
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* 公众号通知设置表单 */
+.form-card {
+  padding: 0 30rpx;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.form-label {
+  width: 200rpx;
+  font-size: 28rpx;
+  color: #5C4A3A;
+  flex-shrink: 0;
+}
+
+.form-input {
+  flex: 1;
+  height: 80rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 10rpx;
+  padding: 0 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.tip-text {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1.5;
+  margin-bottom: 20rpx;
+}
+
+.save-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  color: #fff;
+}

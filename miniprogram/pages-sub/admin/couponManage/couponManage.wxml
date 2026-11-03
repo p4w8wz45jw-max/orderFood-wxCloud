@@ -1,0 +1,151 @@
+<!-- pages-sub/admin/couponManage/couponManage.wxml -->
+<view class="page">
+  <!-- Tab 切换 -->
+  <view class="tabs">
+    <view class="tab {{activeTab === 0 ? 'active' : ''}}" bindtap="switchTab" data-tab="0">优惠券管理</view>
+    <view class="tab {{activeTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-tab="1">套票管理</view>
+  </view>
+
+  <!-- 优惠券管理 Tab -->
+  <view wx:if="{{activeTab === 0}}">
+    <view class="header-bar">
+      <button class="add-btn" bindtap="addCoupon">+ 新建优惠券</button>
+    </view>
+    <view class="coupon-list">
+      <block wx:for="{{couponList}}" wx:key="_id">
+        <view class="coupon-card">
+          <view class="coupon-info">
+            <text class="coupon-name">{{item.name}}</text>
+            <text class="coupon-type">类型：{{item.type === 'full_reduction' ? '满减券' : (item.type === 'discount' ? '折扣券' : '商品券')}}</text>
+            <text class="coupon-detail" wx:if="{{item.type === 'full_reduction'}}">满{{item.condition}}减{{item.value}}</text>
+            <text class="coupon-detail" wx:if="{{item.type === 'discount'}}">{{item.discount * 10}}折</text>
+            <text class="coupon-detail" wx:if="{{item.type === 'product'}}">商品：{{item.productName}}</text>
+            <text class="coupon-expire">有效期：领取后{{item.expireDays}}天</text>
+            <text class="coupon-status {{item.enable ? 'on' : 'off'}}">{{item.enable ? '已启用' : '已禁用'}}</text>
+          </view>
+          <view class="coupon-actions">
+            <text class="edit" bindtap="editCoupon" data-id="{{item._id}}">编辑</text>
+            <text class="delete" bindtap="deleteCoupon" data-id="{{item._id}}">删除</text>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{couponList.length === 0}}" class="empty">暂无优惠券，点击上方添加</view>
+    </view>
+  </view>
+
+  <!-- 套票管理 Tab -->
+  <view wx:if="{{activeTab === 1}}">
+    <view class="header-bar">
+      <button class="add-btn" bindtap="addPackage">+ 新建套票</button>
+    </view>
+    <view class="package-list">
+      <block wx:for="{{packageList}}" wx:key="_id">
+        <view class="package-card">
+          <view class="package-info">
+            <text class="package-name">{{item.name}}</text>
+            <text class="package-price">¥{{item.price}}</text>
+            <text class="package-detail">包含 {{item.couponCount}} 张 {{item.couponName}}</text>
+            <text class="package-expire">有效期：{{item.expireDays}}天</text>
+            <text class="package-status {{item.enable ? 'on' : 'off'}}">{{item.enable ? '已启用' : '已禁用'}}</text>
+          </view>
+          <view class="package-actions">
+            <text class="edit" bindtap="editPackage" data-id="{{item._id}}">编辑</text>
+            <text class="delete" bindtap="deletePackage" data-id="{{item._id}}">删除</text>
+          </view>
+        </view>
+      </block>
+      <view wx:if="{{packageList.length === 0}}" class="empty">暂无套票，点击上方添加</view>
+    </view>
+  </view>
+
+  <!-- ========== 优惠券编辑弹窗 ========== -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal">
+    <view class="modal-dialog" catchtap="noop">
+      <view class="modal-title">{{isEdit ? '编辑优惠券' : '新建优惠券'}}</view>
+      <view class="modal-content-scroll">
+        <view class="form-item">
+          <text>优惠券名称</text>
+          <input placeholder="如：10元优惠券" value="{{formData.name}}" bindinput="onNameInput" />
+        </view>
+        <view class="form-item">
+          <text>优惠券类型</text>
+          <picker mode="selector" range="{{couponTypes}}" bindchange="onTypeChange">
+            <view>{{couponTypes[formData.typeIndex]}}</view>
+          </picker>
+        </view>
+        <!-- 满减券 -->
+        <view class="form-item" wx:if="{{formData.type === 'full_reduction'}}">
+          <text>满减条件（元）</text>
+          <input type="text" placeholder="满多少元" value="{{formData.condition}}" bindinput="onConditionInput" />
+        </view>
+        <view class="form-item" wx:if="{{formData.type === 'full_reduction'}}">
+          <text>减多少元</text>
+          <input type="text" placeholder="减多少元" value="{{formData.value}}" bindinput="onValueInput" />
+        </view>
+        <!-- 折扣券 -->
+        <view class="form-item" wx:if="{{formData.type === 'discount'}}">
+          <text>折扣</text>
+          <input type="text" placeholder="如：8.8折" value="{{formData.discount}}" bindinput="onDiscountInput" />
+        </view>
+        <!-- 商品券 -->
+        <view class="form-item" wx:if="{{formData.type === 'product'}}">
+          <text>选择商品</text>
+          <picker mode="selector" range="{{dishList}}" range-key="name" bindchange="onProductChange">
+            <view>{{formData.productName || '请选择商品'}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text>有效期（天）</text>
+          <input type="text" placeholder="领取后有效天数" value="{{formData.expireDays}}" bindinput="onExpireDaysInput" />
+        </view>
+        <view class="form-item">
+          <text>是否启用</text>
+          <switch checked="{{formData.enable}}" bindchange="onEnableChange" color="{{themeColor}}" />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="btn cancel" bindtap="closeModal">取消</view>
+        <view class="btn confirm" bindtap="saveCoupon">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ========== 套票编辑弹窗 ========== -->
+  <view class="modal-mask" wx:if="{{showPackageModal}}" bindtap="closePackageModal">
+    <view class="modal-dialog" catchtap="noop">
+      <view class="modal-title">{{isEditPackage ? '编辑套票' : '新建套票'}}</view>
+      <view class="modal-content-scroll">
+        <view class="form-item">
+          <text>套票名称</text>
+          <input type="text" placeholder="如：超值10元套餐" value="{{packageForm.name}}" bindinput="onPackageNameInput" />
+        </view>
+        <view class="form-item">
+          <text>价格（元）</text>
+          <input type="text" placeholder="售价" value="{{packageForm.price}}" bindinput="onPackagePriceInput" />
+        </view>
+        <view class="form-item">
+          <text>选择优惠券</text>
+          <picker mode="selector" range="{{couponList}}" range-key="name" bindchange="onPackageCouponChange">
+            <view>{{packageForm.couponName || '请选择优惠券'}}</view>
+          </picker>
+        </view>
+        <view class="form-item">
+          <text>包含张数</text>
+          <input type="text" placeholder="如：10" value="{{packageForm.couponCount}}" bindinput="onPackageCountInput" />
+        </view>
+        <view class="form-item">
+          <text>有效期（天）</text>
+          <input type="text" placeholder="默认30天" value="{{packageForm.expireDays}}" bindinput="onPackageExpireDaysInput" />
+        </view>
+        <view class="form-item">
+          <text>是否启用</text>
+          <switch checked="{{packageForm.enable}}" bindchange="onPackageEnableChange" color="{{themeColor}}" />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="btn cancel" bindtap="closePackageModal">取消</view>
+        <view class="btn confirm" bindtap="savePackage">保存</view>
+      </view>
+    </view>
+  </view>
+</view>

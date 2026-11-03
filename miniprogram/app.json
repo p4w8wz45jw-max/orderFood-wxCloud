@@ -1,0 +1,101 @@
+{
+  "pages": [
+    "pages/start/start",
+    "pages/index/index",
+    "pages/recharge/recharge",
+    "pages/myorder/myorder",
+    "pages/myhome/myhome",
+    "pages/settle/settle",
+    "pages/address/list/list",
+    "pages/address/edit/edit",
+    "pages/orderDetail/orderDetail",
+    "pages/lottery/lottery",
+    "pages/coupon/coupon",
+    "pages/pointMall/pointMall",
+    "pages/couponCenter/couponCenter",
+    "pages/seckill/seckill",
+    "pages/invite/invite",
+    "pages/diy/diy"
+  ],
+  "subPackages": [
+    {
+      "root": "pages-sub",
+      "pages": [
+        "admin/admin",
+        "admin/dish/dish",
+        "admin/user/user",
+        "admin/order/order",
+        "admin/rechargeOptions/rechargeOptions",
+        "admin/notice/notice",
+        "admin/shopInfo/shopInfo",
+        "admin/pageLayout/pageLayout",
+        "admin/printer/printer",
+        "admin/payConfig/payConfig",
+        "admin/deliveryConfig/deliveryConfig",
+        "admin/lotteryConfig/lotteryConfig",
+        "admin/couponManage/couponManage",
+        "admin/pointsConfig/pointsConfig",
+        "admin/seckill/seckill",
+        "admin/inviteConfig/inviteConfig",
+        "admin/newUserGift/newUserGift",
+        "admin/statistics/statistics",
+        "admin/diyConfig/diyConfig"
+      ]
+    }
+  ],
+  "window": {
+    "backgroundColor": "#F5EDE4",
+    "backgroundTextStyle": "light",
+    "navigationBarTitleText": "餐饮点餐",
+    "navigationBarTextStyle": "white"
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation"
+  ],
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#B8956E",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/tabBar/buy.png",
+        "selectedIconPath": "images/tabBar/buy-active.png",
+        "text": "点餐"
+      },
+      {
+        "pagePath": "pages/recharge/recharge",
+        "iconPath": "images/tabBar/recharge.png",
+        "selectedIconPath": "images/tabBar/recharge-active.png",
+        "text": "充值"
+      },
+      {
+        "pagePath": "pages/myorder/myorder",
+        "iconPath": "images/tabBar/myOrder.png",
+        "selectedIconPath": "images/tabBar/myOrder-active.png",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/myhome/myhome",
+        "iconPath": "images/tabBar/me.png",
+        "selectedIconPath": "images/tabBar/me-active.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-notice-bar": "/vant/notice-bar/index",
+    "van-search": "/vant/search/index",
+    "van-dropdown-menu": "/vant/dropdown-menu/index",
+    "van-dropdown-item": "/vant/dropdown-item/index",
+    "van-cell": "/vant/cell/index",
+    "van-cell-group": "/vant/cell-group/index",
+    "van-grid": "/vant/grid/index",
+    "van-grid-item": "/vant/grid-item/index",
+    "van-tabs": "/vant/tabs/index",
+    "van-tab": "/vant/tab/index",
+    "van-tag": "/vant/tag/index"
+  },
+  "sitemapLocation": "sitemap.json",
+  "style": "v2"
+}

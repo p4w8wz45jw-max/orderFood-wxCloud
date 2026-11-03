@@ -1,0 +1,112 @@
+/* pages/coupon/coupon.wxss - 温暖奶油风 */
+.container {
+  padding: 20rpx;
+  background: #F5EDE4;
+  min-height: 100vh;
+}
+.tabs {
+  display: flex;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  border: 1rpx solid rgba(160,128,96,0.08);
+}
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 24rpx 0;
+  font-size: 28rpx;
+  color: #8B7355;
+  border-bottom: 4rpx solid transparent;
+}
+.tab.active {
+  color: #B8956E;
+  border-bottom-color: #B8956E;
+  font-weight: bold;
+}
+.coupon-list {
+  padding: 0 20rpx;
+}
+.coupon-item {
+  display: flex;
+  justify-content: space-between;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.05);
+  border: 1rpx solid rgba(160,128,96,0.06);
+}
+.coupon-left {
+  flex: 2;
+}
+.coupon-value {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #D4A574;
+}
+.coupon-name {
+  font-size: 28rpx;
+  color: #5C4A3A;
+  display: block;
+  margin-top: 10rpx;
+}
+.coupon-right {
+  flex: 1;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.coupon-expire {
+  font-size: 24rpx;
+  color: #A09888;
+  display: block;
+}
+.use-btn {
+  background: #6B9E6B;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+  padding: 12rpx 20rpx;
+  margin-top: 16rpx;
+  border: none;
+  line-height: 1;
+}
+.status-text {
+  font-size: 26rpx;
+  color: #A09888;
+  margin-top: 16rpx;
+}
+.loading, .empty {
+  text-align: center;
+  margin-top: 100rpx;
+  color: #A09888;
+}
+/* 优惠券中心入口样式 */
+.coupon-center-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFBF7;
+  margin: 20rpx;
+  margin-top: 40rpx;
+  padding: 24rpx 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.05);
+  border: 1rpx solid rgba(160,128,96,0.06);
+}
+.entry-icon {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+}
+.entry-text {
+  flex: 1;
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+}
+.entry-arrow {
+  font-size: 36rpx;
+  color: #D4C4AC;
+}

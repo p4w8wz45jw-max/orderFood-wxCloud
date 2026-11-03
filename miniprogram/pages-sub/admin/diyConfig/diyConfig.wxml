@@ -1,0 +1,163 @@
+<!--pages-sub/admin/diyConfig/diyConfig.wxml-->
+<view class="page">
+  <view class="form-section">
+    <view class="form-item">
+      <view class="form-label">DIY菜单总开关</view>
+      <view class="rule-row">
+        <text>开启DIY菜单（我的页面显示入口）</text>
+        <switch checked="{{enable}}" bindchange="onEnableChange" color="{{themeColor}}" />
+      </view>
+      <view class="tip" wx:if="{{enable}}" style="color: #07c160;">已开启，用户可在「我的 - DIY菜单」中搭配下单</view>
+      <view class="tip" wx:else style="color: #999;">未开启，用户端不显示</view>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">DIY订单配送费（按距离计费）</view>
+      <view class="rule-grid">
+        <view class="rule-cell">
+          <view class="rule-label">基础配送费</view>
+          <view class="price-input-row">
+            <text class="price-prefix">¥</text>
+            <input class="price-input" type="digit" placeholder="如：5" value="{{diyBaseFee}}" bindinput="onDiyBaseFeeInput" />
+          </view>
+        </view>
+        <view class="rule-cell">
+          <view class="rule-label">基础公里数</view>
+          <view class="price-input-row">
+            <input class="price-input" type="digit" placeholder="如：3" value="{{diyBaseKm}}" bindinput="onDiyBaseKmInput" />
+            <text class="price-unit">公里</text>
+          </view>
+        </view>
+        <view class="rule-cell">
+          <view class="rule-label">超出后每公里加收</view>
+          <view class="price-input-row">
+            <text class="price-prefix">¥</text>
+            <input class="price-input" type="digit" placeholder="如：2" value="{{diyPerKm}}" bindinput="onDiyPerKmInput" />
+          </view>
+        </view>
+        <view class="rule-cell">
+          <view class="rule-label">最大配送距离</view>
+          <view class="price-input-row">
+            <input class="price-input" type="digit" placeholder="如：10" value="{{diyMaxKm}}" bindinput="onDiyMaxKmInput" />
+            <text class="price-unit">公里</text>
+          </view>
+        </view>
+      </view>
+      <view class="tip">例：基础费¥5、基础3公里、每公里加¥2 → 3公里内收¥5，超过3公里每多1公里加¥2。最大配送距离不填则不限；全部不填则免配送费。此规则独立于普通订单配送费</view>
+    </view>
+  </view>
+
+  <!-- ===== 两荤一素配置 ===== -->
+  <view class="form-section">
+    <view class="section-header">
+      <text class="section-title">两荤一素套餐</text>
+      <switch checked="{{twoEnable}}" bindchange="onTwoEnableChange" color="{{themeColor}}" />
+    </view>
+
+    <view class="form-item" wx:if="{{twoEnable}}">
+      <view class="form-label">套餐整体价格</view>
+      <view class="price-input-row">
+        <text class="price-prefix">¥</text>
+        <input class="price-input" type="digit" placeholder="如：18" value="{{twoPrice}}" bindinput="onTwoPriceInput" />
+        <text class="price-unit">元/份</text>
+      </view>
+    </view>
+
+    <view class="option-block" wx:if="{{twoEnable}}">
+      <view class="form-label">肉类选项（用户任选2个）</view>
+      <view class="option-item" wx:for="{{twoMeats}}" wx:key="key">
+        <input class="option-input name" placeholder="肉类名称，如：红烧肉" value="{{item.name}}"
+          data-index="{{index}}" bindinput="onTwoMeatInput" />
+        <view class="price-wrap">
+          <text class="price-prefix">+¥</text>
+          <input class="option-input" type="digit" placeholder="加价" value="{{item.price}}"
+            data-index="{{index}}" bindinput="onTwoMeatPriceInput" />
+        </view>
+        <view class="remove-btn" data-index="{{index}}" bindtap="removeTwoMeat">删除</view>
+      </view>
+      <view class="tip">可对部分肉类单独加价，如：牛肉 +¥5。不填则不加价，用户选中后套餐总价自动增加</view>
+      <view class="add-btn" bindtap="addTwoMeat">＋ 添加肉类</view>
+    </view>
+
+    <view class="option-block" wx:if="{{twoEnable}}">
+      <view class="form-label">菜类选项（用户任选1个）</view>
+      <view class="option-item" wx:for="{{twoVegs}}" wx:key="key">
+        <input class="option-input" placeholder="菜类名称，如：清炒时蔬" value="{{item.name}}"
+          data-index="{{index}}" bindinput="onTwoVegInput" />
+        <view class="remove-btn" data-index="{{index}}" bindtap="removeTwoVeg">删除</view>
+      </view>
+      <view class="add-btn" bindtap="addTwoVeg">＋ 添加菜类</view>
+    </view>
+
+    <view class="tip" wx:if="{{!twoEnable}}" style="color: #999;">已关闭，用户端不显示两荤一素套餐</view>
+  </view>
+
+  <!-- ===== 一荤一素配置 ===== -->
+  <view class="form-section">
+    <view class="section-header">
+      <text class="section-title">一荤一素套餐</text>
+      <switch checked="{{oneEnable}}" bindchange="onOneEnableChange" color="{{themeColor}}" />
+    </view>
+
+    <view class="form-item" wx:if="{{oneEnable}}">
+      <view class="form-label">套餐整体价格</view>
+      <view class="price-input-row">
+        <text class="price-prefix">¥</text>
+        <input class="price-input" type="digit" placeholder="如：12" value="{{onePrice}}" bindinput="onOnePriceInput" />
+        <text class="price-unit">元/份</text>
+      </view>
+    </view>
+
+    <view class="option-block" wx:if="{{oneEnable}}">
+      <view class="form-label">肉类选项（用户任选1个）</view>
+      <view class="option-item" wx:for="{{oneMeats}}" wx:key="key">
+        <input class="option-input name" placeholder="肉类名称，如：宫保鸡丁" value="{{item.name}}"
+          data-index="{{index}}" bindinput="onOneMeatInput" />
+        <view class="price-wrap">
+          <text class="price-prefix">+¥</text>
+          <input class="option-input" type="digit" placeholder="加价" value="{{item.price}}"
+            data-index="{{index}}" bindinput="onOneMeatPriceInput" />
+        </view>
+        <view class="remove-btn" data-index="{{index}}" bindtap="removeOneMeat">删除</view>
+      </view>
+      <view class="tip">可对部分肉类单独加价，如：牛肉 +¥5。不填则不加价，用户选中后套餐总价自动增加</view>
+      <view class="add-btn" bindtap="addOneMeat">＋ 添加肉类</view>
+    </view>
+
+    <view class="option-block" wx:if="{{oneEnable}}">
+      <view class="form-label">菜类选项（用户任选1个）</view>
+      <view class="option-item" wx:for="{{oneVegs}}" wx:key="key">
+        <input class="option-input" placeholder="菜类名称，如：凉拌黄瓜" value="{{item.name}}"
+          data-index="{{index}}" bindinput="onOneVegInput" />
+        <view class="remove-btn" data-index="{{index}}" bindtap="removeOneVeg">删除</view>
+      </view>
+      <view class="add-btn" bindtap="addOneVeg">＋ 添加菜类</view>
+    </view>
+
+    <view class="tip" wx:if="{{!oneEnable}}" style="color: #999;">已关闭，用户端不显示一荤一素套餐</view>
+  </view>
+
+  <button class="save-btn" type="primary" bindtap="saveConfig" style="background-color: {{themeColor}};">保存配置</button>
+
+  <!-- ===== 用户建议 ===== -->
+  <view class="form-section">
+    <view class="form-label">用户建议（没有想吃的，想吃什么）</view>
+    <view wx:if="{{suggestionsLoading}}" class="suggest-loading">加载中...</view>
+    <view wx:elif="{{suggestions.length === 0}}" class="suggest-empty">
+      <text>暂无用户建议</text>
+    </view>
+    <view wx:else class="suggest-list">
+      <view class="suggest-item" wx:for="{{suggestions}}" wx:key="_id">
+        <view class="suggest-main">
+          <view class="suggest-content">{{item.content}}</view>
+          <view class="suggest-meta">
+            <text>{{item.nickName || '匿名用户'}}</text>
+            <text wx:if="{{item.phoneNumber}}" class="suggest-phone">{{item.phoneNumber}}</text>
+            <text class="suggest-time">{{item.timeText}}</text>
+          </view>
+        </view>
+        <view class="suggest-del" data-id="{{item._id}}" bindtap="deleteSuggestion">删除</view>
+      </view>
+    </view>
+  </view>
+</view>

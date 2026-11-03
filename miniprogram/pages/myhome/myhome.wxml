@@ -1,0 +1,183 @@
+<!-- pages/myhome/myhome.wxml -->
+<wxs module="priceHelper" src="/utils/priceHelper.wxs"></wxs>
+<view class="page">
+  <!-- 用户信息头部 -->
+  <view class="user-info-header" bindtap="handleUserLogin">
+    <view class="user-avatar-box">
+      <image wx:if="{{userInfo.avatarUrl}}" class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <view wx:else class="user-avatar-placeholder">
+        <image class="avatar-default-icon" src="/images/icons/icon_user.png" mode="aspectFit"></image>
+      </view>
+    </view>
+    <view class="user-name-box">
+      <text class="user-name">{{userInfo.nickName || '点击登录'}}</text>
+      <text class="user-hint">{{userInfo.phoneNumber ? '已绑定手机' : '点击获取手机号和头像昵称'}}</text>
+    </view>
+    <view class="user-arrow">
+      <text class="arrow-icon">›</text>
+    </view>
+  </view>
+
+  <!-- 公告跑马灯 -->
+  <view class="notice-card" wx:if="{{noticeText}}">
+    <van-notice-bar left-icon="volume-o" text="{{noticeText}}" scrollable speed="{{30}}" background="#fdf8ef" color="#8b6344" />
+  </view>
+
+  <!-- DIY菜单卡片 -->
+  <view class="vip-card" bindtap="goToDiy">
+    <view class="vip-left">
+      <view class="vip-title-row">
+        <text class="vip-title">「DIY菜单」</text>
+      </view>
+      <text class="vip-subtitle">DIY Menu</text>
+      <view class="recharge-btn">
+        <text class="recharge-btn-text">开始搭配</text>
+      </view>
+    </view>
+    <view class="vip-right">
+      <view class="vip-badge">
+        <text class="vip-text">DIY</text>
+        <view class="vip-avatar-small">
+          <image class="vip-avatar-emoji" src="/images/icons/icon_vip.png" mode="aspectFit"></image>
+        </view>
+        <!-- <text class="vip-name">一点恬</text> -->
+      </view>
+    </view>
+  </view>
+
+  <!-- 余额快捷查看 -->
+  <view class="quick-info-card">
+    <view class="quick-item" bindtap="showBalanceDetail">
+      <text class="quick-label">账户余额</text>
+      <text class="quick-value">¥{{priceHelper.formatBalance(userInfo.balance)}}</text>
+    </view>
+    <view class="quick-divider"></view>
+    <view class="quick-item" bindtap="goToPointMall">
+      <text class="quick-label">我的积分</text>
+      <text class="quick-value highlight">{{points}}</text>
+    </view>
+  </view>
+
+  <!-- 功能网格 -->
+  <view class="func-grid">
+    <view class="func-item" bindtap="goToCoupon">
+      <image class="func-icon-img" src="/images/icons/icon_coupon.png" mode="aspectFit"></image>
+      <text class="func-text">我的优惠券</text>
+    </view>
+    <view class="func-item" bindtap="goToCouponCenter">
+      <image class="func-icon-img" src="/images/icons/icon_coupon_center.png" mode="aspectFit"></image>
+      <text class="func-text">优惠券中心</text>
+    </view>
+    <view class="func-item" bindtap="goToLottery">
+      <image class="func-icon-img" src="/images/icons/icon_gift.png" mode="aspectFit"></image>
+      <text class="func-text">幸运抽奖</text>
+    </view>
+    <view class="func-item" bindtap="goToSeckill">
+      <image class="func-icon-img" src="/images/icons/icon_group.png" mode="aspectFit"></image>
+      <text class="func-text">限时秒杀</text>
+    </view>
+    <view class="func-item" bindtap="goToInvite">
+      <image class="func-icon-img" src="/images/icons/icon_invite.png" mode="aspectFit"></image>
+      <text class="func-text">邀请有奖</text>
+    </view>
+    <view class="func-item" bindtap="contactService">
+      <image class="func-icon-img" src="/images/icons/icon_order.png" mode="aspectFit"></image>
+      <text class="func-text">联系客服</text>
+    </view>
+  </view>
+
+  <!-- 管理员入口 -->
+  <view class="admin-trigger" bindtap="onAdminTrigger"></view>
+  <view class="admin-hidden-btn" bindtap="onAdminTrigger">
+    <image class="admin-icon-img" src="/images/icons/icon_admin.png" mode="aspectFit"></image>
+  </view>
+
+  <!-- 密码弹窗 -->
+  <view class="modal-mask" wx:if="{{showPasswordModal}}" catchtap="noop">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">{{isFirstTime ? '设置管理员密码' : '管理员登录'}}</view>
+      <view class="modal-content">
+        <input class="password-input" type="password" placeholder="{{isFirstTime ? '请设置管理员密码（至少6位）' : '请输入管理员密码'}}" value="{{adminPassword}}" bindinput="onPasswordInput" />
+        <view class="password-hint" wx:if="{{isFirstTime}}">首次设置，请设置一个安全的密码</view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closePasswordModal">取消</view>
+        <view class="modal-btn confirm" style="color: #8b6344;" bindtap="verifyPassword">{{isFirstTime ? '设置' : '登录'}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户授权组件 -->
+  <avatar-nickname-modal showAvaModal="{{showAuthModal}}" bind:saved="onUserInfoSaved"></avatar-nickname-modal>
+
+  <!-- 余额明细弹窗 -->
+  <view class="modal-mask" wx:if="{{showBalanceDetail}}" catchtap="closeBalanceDetail">
+    <view class="modal-dialog balance-detail-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>余额明细</text>
+        <view class="balance-total">
+          当前余额: <text class="balance-total-num">¥{{priceHelper.formatBalance(userInfo.balance)}}</text>
+        </view>
+      </view>
+      <scroll-view class="balance-detail-content" scroll-y>
+        <view wx:if="{{balanceDetailLoading}}" class="balance-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{balanceHistory.length === 0}}" class="balance-empty">
+          <text>暂无余额变动记录</text>
+        </view>
+        <view wx:else class="balance-list">
+          <view class="balance-item" wx:for="{{balanceHistory}}" wx:key="id">
+            <view class="balance-item-left">
+              <view class="balance-item-icon {{item.isIncome ? 'income-icon' : 'expense-icon'}}">
+                <text wx:if="{{item.type === 'recharge'}}">💳</text>
+                <text wx:elif="{{item.type === 'order_pay'}}">🛒</text>
+                <text wx:else>✏️</text>
+              </view>
+              <view class="balance-item-info">
+                <view class="balance-item-desc">{{item.description}}</view>
+                <view class="balance-item-date">{{item.date}}</view>
+              </view>
+            </view>
+            <view class="balance-item-amount {{item.isIncome ? 'income' : 'expense'}}">
+              {{item.isIncome ? '+' : ''}}¥{{item.isIncome ? item.amount.toFixed(2) : Math.abs(item.amount).toFixed(2)}}
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closeBalanceDetail">关闭</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 联系客服弹窗 -->
+  <view class="modal-mask" wx:if="{{showServiceModal}}" catchtap="closeServiceModal">
+    <view class="modal-dialog service-dialog" catchtap="stopPropagation">
+      <view class="modal-title">联系客服</view>
+      <view class="modal-content service-content">
+        <view class="service-qrcode-wrapper" wx:if="{{serviceQrcode}}">
+          <image class="service-qrcode" src="{{serviceQrcode}}" mode="widthFix"></image>
+          <view class="service-qrcode-tip">长按识别二维码添加客服</view>
+        </view>
+        <view class="service-qrcode-empty" wx:else>
+          <text class="empty-icon">📷</text>
+          <text class="empty-text">暂无客服二维码</text>
+        </view>
+        <view class="service-phone-wrapper" wx:if="{{servicePhone}}">
+          <view class="service-phone-label">客服电话</view>
+          <view class="service-phone-value" bindtap="callServicePhone">{{servicePhone}}</view>
+          <view class="service-phone-tip">点击号码可拨打电话</view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closeServiceModal">关闭</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text class="version-text">版本号：{{version}}</text>
+  </view>
+</view>

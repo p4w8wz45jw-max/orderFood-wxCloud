@@ -1,0 +1,36 @@
+<!-- pages/notice/notice.wxml -->
+<view class="page">
+  <!-- 充值活动说明 -->
+  <view class="section">
+    <view class="section-title">充值活动说明</view>
+    <textarea 
+      class="recharge-input" 
+      placeholder="请输入充值活动说明内容，支持换行"
+      value="{{rechargeNotice}}"
+      bindinput="onRechargeNoticeInput"
+    />
+    <button class="save-btn" type="primary" bindtap="saveRechargeNotice">保存充值说明</button>
+  </view>
+
+  <!-- 滚动公告 -->
+  <view class="section">
+    <view class="section-title">滚动公告</view>
+    <button class="add-btn" bindtap="addNotice">+ 添加公告</button>
+    
+    <view class="notice-list">
+      <view class="notice-item" wx:for="{{notices}}" wx:key="_id">
+        <view class="notice-info">
+          <text class="notice-content">{{item.content}}</text>
+          <text class="notice-status {{item.status === 1 ? 'on' : 'off'}}">
+            {{item.status === 1 ? '已启用' : '已禁用'}}
+          </text>
+        </view>
+        <view class="notice-btns">
+          <text class="btn" bindtap="toggleStatus" data-id="{{item._id}}">{{item.status === 1 ? '禁用' : '启用'}}</text>
+          <text class="btn delete" bindtap="deleteNotice" data-id="{{item._id}}">删除</text>
+        </view>
+      </view>
+      <view wx:if="{{notices.length === 0}}" class="empty">暂无公告</view>
+    </view>
+  </view>
+</view>

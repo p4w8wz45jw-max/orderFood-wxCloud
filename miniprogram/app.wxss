@@ -1,0 +1,106 @@
+/**app.wxss - 温暖奶油风全局样式**/
+page {
+  background-color: #F5EDE4;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+/* 卡片样式 */
+.card {
+  background: #FFFBF7;
+  border-radius: 20rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 20rpx rgba(139, 115, 85, 0.06);
+  border: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+/* ====== 全局图标样式 ====== */
+/* 功能网格图标 */
+.func-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 管理员入口图标 */
+.admin-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+}
+
+/* 小图标 */
+.icon-img-sm {
+  width: 44rpx;
+  height: 44rpx;
+}
+
+/* 中图标 */
+.icon-img-md {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+/* 大图标 */
+.icon-img-lg {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+/* 菜单网格图标 */
+.menu-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 12rpx;
+}
+
+/* 分类入口图标 */
+.cate-icon-img {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+/* 卡片信息图标 */
+.card-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+  flex-shrink: 0;
+}
+
+/* 订单类型图标 */
+.order-type-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 6rpx;
+  flex-shrink: 0;
+}
+
+/* 订单类型行 */
+.order-type-row {
+  display: flex;
+  align-items: center;
+}
+
+/* 空状态图标 */
+.empty-icon-img {
+  width: 120rpx;
+  height: 120rpx;
+}
+
+/* 提示图标 */
+.tips-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 6rpx;
+  flex-shrink: 0;
+}
+
+/* 信息行图标 */
+.info-icon-img {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 10rpx;
+  flex-shrink: 0;
+}

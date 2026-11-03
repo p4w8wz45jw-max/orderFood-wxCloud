@@ -1,0 +1,75 @@
+<!-- pages/admin/order/order.wxml -->
+<view class="page">
+  <view class="filter-bar">
+    <view class="refresh-bar">
+      <view class="refresh-btn" bindtap="loadOrders">刷新</view>
+      <view class="refresh-tip">下拉也可刷新</view>
+    </view>
+  </view>
+
+  <scroll-view class="order-list" scroll-y>
+    <view class="order-item" wx:for="{{orders}}" wx:key="_id" bindtap="goOrderDetail" data-order="{{item}}">
+      <view class="order-header">
+        <view class="order-user-info">
+          <image class="user-avatar" src="{{item.userAvatar || '/images/default-avatar.png'}}" mode="aspectFill"></image>
+          <view class="user-info-text">
+            <view class="user-name">{{item.userNickName || '匿名用户'}}</view>
+            <view class="user-phone">{{item.userPhone || '无手机号'}}</view>
+          </view>
+        </view>
+        <view class="order-type">{{item.orderTypeText}}</view>
+      </view>
+
+      <view class="order-content">
+        <block wx:if="{{item.type === 'recharge'}}">
+          <view class="recharge-info">
+            <view class="recharge-item">
+              <text class="recharge-label">充值金额</text>
+              <text class="recharge-value">¥{{item.amount}}</text>
+            </view>
+            <view class="recharge-item">
+              <text class="recharge-label">赠送金额</text>
+              <text class="recharge-value gift">¥{{item.giveAmount}}</text>
+            </view>
+            <view class="recharge-item">
+              <text class="recharge-label">到账金额</text>
+              <text class="recharge-value total">¥{{item.totalGet}}</text>
+            </view>
+          </view>
+        </block>
+        <block wx:else>
+          <view class="goods-list">
+            <view class="goods-item" wx:for="{{item.goodsList}}" wx:key="dishId">
+              <view class="goods-name">{{item.dishName}}</view>
+              <view class="goods-price">¥{{item.price}} x{{item.count}} = ¥{{item.subtotal}}</view>
+            </view>
+          </view>
+          <!-- 费用明细 -->
+          <view class="price-breakdown">
+            <view class="breakdown-row">
+              <text>商品小计</text>
+              <text>¥{{item.goodsSubtotal}}</text>
+            </view>
+            <view class="breakdown-row" wx:if="{{item.totalDiscountText}}">
+              <text>优惠</text>
+              <text class="discount-text">-¥{{item.totalDiscountText}}</text>
+            </view>
+            <view class="breakdown-row" wx:if="{{item.deliveryFeeText}}">
+              <text>配送费</text>
+              <text>¥{{item.deliveryFeeText}}</text>
+            </view>
+            <view class="breakdown-row total-row">
+              <text>合计</text>
+              <text class="total-price">¥{{item.finalPriceText}}</text>
+            </view>
+          </view>
+        </block>
+      </view>
+
+      <!-- 订单底部：已删除重新打印按钮，只保留时间 -->
+      <view class="order-footer">
+        <view class="order-time">{{item.createTimeText}}</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

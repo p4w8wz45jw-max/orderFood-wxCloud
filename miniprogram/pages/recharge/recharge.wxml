@@ -1,0 +1,72 @@
+<!-- pages/recharge/recharge.wxml -->
+<wxs module="priceHelper" src="/utils/priceHelper.wxs"></wxs>
+<view class="page">
+  <!-- 会员卡 -->
+  <view class="member-card" style="background: linear-gradient(135deg, {{themeColor}}, {{themeColor}}cc);">
+    <view class="member-header">
+      <view class="member-title">
+        <text class="member-label">会员充值</text>
+        <image class="icon-img" src="/images/icons/icon_recharge.png" mode="aspectFit"></image>
+      </view>
+      <view class="member-balance">
+        <text class="balance-label">账户余额</text>
+        <view class="balance-amount">
+          <text class="balance-symbol">¥</text>
+          <text class="balance-num">{{priceHelper.formatBalance(userInfo.balance)}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 充值套餐 -->
+  <view class="recharge-section">
+    <view class="section-title">选择充值套餐</view>
+    <view class="recharge-list">
+      <view 
+        class="recharge-item {{selectedRechargeId === item._id ? 'selected' : ''}}" 
+        wx:for="{{rechargeList}}" 
+        wx:key="_id"
+        bindtap="selectRecharge"
+        data-recharge="{{item}}">
+        <view class="special-tag" wx:if="{{item.isRecommend}}">推荐</view>
+        <view class="recharge-content">
+          <view class="recharge-amount">
+            <text class="amount-symbol">¥</text>
+            <text class="amount-num">{{item.amount}}</text>
+          </view>
+          <view class="recharge-gift" wx:if="{{item.giveAmount > 0}}">
+            赠送¥{{item.giveAmount}}
+          </view>
+          <view class="recharge-gift hidden" wx:else> </view>
+          <view class="recharge-total">到账¥{{item.amount + item.giveAmount}}</view>
+        </view>
+        <view class="selected-icon" wx:if="{{selectedRechargeId === item._id}}">✓</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 充值说明 -->
+  <view class="tips-section">
+    <view class="section-title">充值说明</view>
+    <view class="recharge-notice">
+      <text class="notice-text">{{rechargeNotice || '暂无说明'}}</text>
+    </view>
+  </view>
+
+  <!-- 底部充值按钮 -->
+  <view class="bottom-bar">
+    <view class="bottom-info">
+      <text class="bottom-label">共需支付</text>
+      <view class="bottom-price">
+        <text class="price-symbol">¥</text>
+        <text class="price-num">{{selectedRecharge ? selectedRecharge.amount : 0}}</text>
+      </view>
+    </view>
+    <view class="recharge-btn" style="background-color: {{themeColor}};" bindtap="confirmRecharge">立即充值</view>
+  </view>
+
+  <!-- 加载状态 -->
+  <view class="loading-more" wx:if="{{loadingRecharge && rechargeList.length === 0}}">
+    <text>加载中...</text>
+  </view>
+</view>

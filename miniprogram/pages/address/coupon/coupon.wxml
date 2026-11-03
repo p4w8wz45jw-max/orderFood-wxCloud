@@ -1,0 +1,27 @@
+<!--pages/coupon/coupon.wxml-->
+<view class="container">
+  <view class="tabs">
+    <view class="tab {{status === 'unused' ? 'active' : ''}}" bindtap="switchTab" data-status="unused">未使用</view>
+    <view class="tab {{status === 'used' ? 'active' : ''}}" bindtap="switchTab" data-status="used">已使用</view>
+    <view class="tab {{status === 'expired' ? 'active' : ''}}" bindtap="switchTab" data-status="expired">已过期</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:else>
+    <view class="coupon-list">
+      <view class="coupon-item" wx:for="{{coupons}}" wx:key="couponId"
+        wx:if="{{(status === 'unused' && !item.used && !item.isExpired) || (status === 'used' && item.used) || (status === 'expired' && !item.used && item.isExpired)}}">
+        <view class="coupon-left">
+          <text class="coupon-value">{{item.type === 'coupon' ? '¥' + item.amount : (item.type === 'freeDelivery' ? '免运费' : '余额')}}</text>
+          <text class="coupon-name">{{item.name}}</text>
+        </view>
+        <view class="coupon-right">
+          <text class="coupon-expire">有效期至：{{item.expireText}}</text>
+          <button class="use-btn" wx:if="{{!item.used && !item.isExpired}}" bindtap="useCoupon" data-coupon="{{item}}">去使用</button>
+          <text class="used-tag" wx:else>{{item.used ? '已使用' : '已过期'}}</text>
+        </view>
+      </view>
+      <view wx:if="{{coupons.length === 0}}" class="empty">暂无优惠券</view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,280 @@
+/* pages-sub/admin/lotteryConfig/lotteryConfig.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+  padding-bottom: 60rpx;
+}
+
+.card {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
+}
+
+.card-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.label {
+  width: 180rpx;
+  font-size: 28rpx;
+  color: #666;
+  flex-shrink: 0;
+}
+
+.large-input {
+  flex: 1;
+  border: 2rpx solid #ddd;
+  border-radius: 16rpx;
+  padding: 24rpx 20rpx;
+  font-size: 30rpx;
+  background: #fff;
+  min-height: 88rpx;
+  box-sizing: border-box;
+}
+
+.picker {
+  flex: 1;
+}
+
+.prize-item {
+  background: #f9f9f9;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.prize-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 2rpx solid #eee;
+}
+
+.prize-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.add-btn {
+  background: #e54d42;
+  color: #fff;
+  font-size: 26rpx;
+  padding: 0 30rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  border-radius: 32rpx;
+}
+
+.delete-btn {
+  background: #ff4444;
+  color: #fff;
+  font-size: 24rpx;
+  padding: 0 24rpx;
+  height: 56rpx;
+  line-height: 56rpx;
+  border-radius: 28rpx;
+}
+
+.image-upload {
+  width: 160rpx;
+  height: 160rpx;
+  background: #eee;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.large-image {
+  width: 180rpx;
+  height: 180rpx;
+}
+
+.image-upload image {
+  width: 100%;
+  height: 100%;
+}
+
+.upload-placeholder {
+  color: #999;
+  font-size: 28rpx;
+  text-align: center;
+}
+
+.btn-group {
+  padding: 30rpx 0 60rpx;
+}
+
+.save-btn {
+  background: #e54d42;
+  color: #fff;
+  border-radius: 50rpx;
+  font-size: 34rpx;
+  height: 96rpx;
+  line-height: 96rpx;
+}
+
+/* 优惠券选择器 */
+.coupon-selector {
+  flex: 1;
+  border: 2rpx solid #ddd;
+  border-radius: 16rpx;
+  padding: 24rpx 20rpx;
+  font-size: 30rpx;
+  background: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 88rpx;
+}
+
+.coupon-selector .selected {
+  color: #333;
+}
+
+.coupon-selector .placeholder {
+  color: #999;
+}
+
+.coupon-selector .arrow {
+  color: #ccc;
+  font-size: 40rpx;
+}
+
+.clear-coupon {
+  margin-left: 20rpx;
+  font-size: 24rpx;
+  color: #e54d42;
+  padding: 10rpx 20rpx;
+  border: 1rpx solid #e54d42;
+  border-radius: 30rpx;
+}
+
+/* 优惠券弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-dialog {
+  width: 650rpx;
+  max-height: 70%;
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.coupon-list {
+  max-height: 500rpx;
+  padding: 20rpx;
+}
+
+.coupon-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin-bottom: 20rpx;
+  border-left: 8rpx solid #e54d42;
+}
+
+.coupon-item-left {
+  display: flex;
+  flex-direction: column;
+  gap: 8rpx;
+}
+
+.coupon-item-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.coupon-item-desc {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.coupon-item-right {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.coupon-item-value {
+  color: #e54d42;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.radio-btn {
+  width: 36rpx;
+  height: 36rpx;
+  border: 2rpx solid #ddd;
+  border-radius: 50%;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 60rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.modal-footer {
+  border-top: 1rpx solid #eee;
+  padding: 20rpx;
+}
+
+.modal-btn {
+  text-align: center;
+  padding: 20rpx;
+  font-size: 32rpx;
+  border-radius: 12rpx;
+}
+
+.modal-btn.cancel {
+  background: #f5f5f5;
+  color: #666;
+}

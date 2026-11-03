@@ -1,0 +1,150 @@
+/* pages/start/start.wxss - 温暖奶油风 */
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100vh;
+  background: #F5EDE4;
+  position: relative;
+  padding: 20rpx 0 60rpx;
+  box-sizing: border-box;
+}
+
+/* ====== 店铺名字 ====== */
+.shop-name-box {
+  text-align: center;
+  margin-top: 80rpx;
+  margin-bottom: 50rpx;
+}
+.shop-name-big {
+  display: block;
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  letter-spacing: 6rpx;
+}
+
+/* ====== 分类入口卡片（两个按钮：自提 / 外卖配送） ====== */
+.category-card {
+  width: calc(100% - 64rpx);
+  background: #FFFBF7;
+  border-radius: 24rpx;
+  padding: 50rpx 30rpx 40rpx;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(139, 115, 85, 0.08);
+  border: 1rpx solid rgba(160, 128, 96, 0.10);
+  box-sizing: border-box;
+  margin-bottom: 28rpx;
+}
+
+.cate-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16rpx 30rpx;
+}
+
+.cate-icon-wrap {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20rpx;
+}
+.cate-icon-wrap.pickup { background: #F5E6D0; }
+.cate-icon-wrap.delivery { background: #E8F0E8; }
+
+.cate-emoji {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cate-name {
+  font-size: 32rpx;
+  color: #5C4A3A;
+  font-weight: bold;
+}
+
+/* ====== 店铺信息卡片 ====== */
+.shop-card {
+  background: #FFFBF7;
+  backdrop-filter: blur(20rpx);
+  border-radius: 20rpx;
+  margin: 0 32rpx 20rpx;
+  padding: 28rpx 32rpx;
+  border: 1rpx solid rgba(160, 128, 96, 0.10);
+  width: calc(100% - 64rpx);
+  box-sizing: border-box;
+  box-shadow: 0 4rpx 16rpx rgba(139, 115, 85, 0.06);
+}
+.card-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 18rpx;
+  font-size: 27rpx;
+  color: #5C4A3A;
+  line-height: 1.4;
+}
+.card-item:last-child { margin-bottom: 0; }
+.card-icon-img {
+  margin-right: 16rpx;
+}
+.card-text {
+  flex: 1;
+  word-break: break-all;
+  color: #5C4A3A;
+}
+.card-item.intro {
+  display: block;
+  margin-top: 10rpx;
+  padding-top: 14rpx;
+  border-top: 1rpx solid rgba(160, 128, 96, 0.12);
+}
+.intro-text {
+  font-size: 26rpx;
+  color: #8B7355;
+  line-height: 1.6;
+}
+.card-item.phone {
+  background: rgba(184, 149, 110, 0.10);
+  border-radius: 40rpx;
+  padding: 14rpx 22rpx;
+  margin-top: 12rpx;
+}
+.card-item.phone .card-text {
+  color: #B8956E;
+  font-weight: bold;
+}
+
+/* ====== 弹窗样式 ====== */
+.popup-mask {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(92, 74, 58, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+.popup-container {
+  width: 80%;
+  background: #FFFBF7;
+  border-radius: 28rpx;
+  text-align: center;
+  overflow: hidden;
+  border: 1rpx solid rgba(160, 128, 96, 0.15);
+}
+.popup-image { width: 100%; display: block; }
+.close-btn {
+  padding: 24rpx;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #8B7355;
+  background: #F5EDE4;
+}

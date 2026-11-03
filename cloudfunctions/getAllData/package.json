@@ -1,0 +1,9 @@
+{
+  "name": "getAllData",
+  "version": "1.0.0",
+  "description": "返回集合全部数据，绕过客户端20条限制",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

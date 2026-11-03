@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="form-item">
+    <view class="label">微信支付商户号</view>
+    <input placeholder="请输入商户号" value="{{config.mchId}}" bindinput="onMchIdInput"/>
+  </view>
+  <view class="form-item">
+    <view class="label">API密钥</view>
+    <input placeholder="请输入API密钥" value="{{config.apiKey}}" bindinput="onApiKeyInput"/>
+  </view>
+  <view class="form-item">
+    <view class="label">支付回调地址</view>
+    <input placeholder="选填" value="{{config.notifyUrl}}" bindinput="onNotifyUrlInput"/>
+  </view>
+  <button type="primary" bindtap="save">保存</button>
+</view>

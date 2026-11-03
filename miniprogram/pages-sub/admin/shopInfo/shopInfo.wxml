@@ -1,0 +1,178 @@
+<view class="page">
+  <view class="form-section">
+    <!-- 店铺名称 -->
+    <view class="form-item">
+      <view class="form-label">店铺名称</view>
+      <input class="form-input large-input" placeholder="请输入店铺名称" maxlength="8" value="{{shopinfo.name}}" bindinput="onNameInput" />
+    </view>
+
+    <!-- 营业时间 -->
+    <view class="form-item">
+      <view class="form-label">营业时间</view>
+      <input class="form-input" placeholder="如：10:00 - 21:00" value="{{shopinfo.businessHours}}" bindinput="onBusinessHoursInput" />
+    </view>
+
+    <!-- 店铺地址 -->
+    <view class="form-item">
+      <view class="form-label">店铺地址</view>
+      <textarea class="address-input" placeholder="请输入详细地址" maxlength="100" value="{{shopinfo.address}}" bindinput="onAddressInput" auto-height />
+    </view>
+
+    <!-- 店铺介绍 -->
+    <view class="form-item">
+      <view class="form-label">店铺介绍</view>
+      <textarea class="intro-input" placeholder="如：本店主打烧腊、饮品、咖喱饭等，欢迎光临！" maxlength="200" value="{{shopinfo.intro}}" bindinput="onIntroInput" auto-height />
+      <view class="tip">最多200字，显示在开始页面</view>
+    </view>
+
+    <!-- 联系手机号 -->
+    <view class="form-item">
+      <view class="form-label">店铺联系手机号</view>
+      <input class="form-input" type="number" placeholder="请输入商家手机号" maxlength="11" value="{{shopinfo.contactPhone}}" bindinput="onContactPhoneInput" />
+      <view class="tip">显示在点餐页面，用户可点击拨号</view>
+    </view>
+
+    <!-- 客服手机号 -->
+    <view class="form-item">
+      <view class="form-label">客服手机号</view>
+      <input class="form-input" type="number" placeholder="请输入客服手机号" maxlength="11" value="{{shopinfo.servicePhone}}" bindinput="onServicePhoneInput" />
+      <view class="tip">显示在"我的"页面联系客服弹窗中</view>
+    </view>
+
+    <!-- 客服二维码 -->
+    <view class="form-item">
+      <view class="form-label">客服二维码</view>
+      <view class="qrcode-upload-area">
+        <image wx:if="{{shopinfo.serviceQrcode}}" class="qrcode-preview" src="{{shopinfo.serviceQrcode}}" mode="widthFix" bindtap="previewServiceQrcode"></image>
+        <view wx:else class="qrcode-placeholder" bindtap="uploadServiceQrcode">
+          <text class="placeholder-icon">📷</text>
+          <text class="placeholder-text">点击上传客服二维码</text>
+        </view>
+        <view class="qrcode-actions" wx:if="{{shopinfo.serviceQrcode}}">
+          <button class="qrcode-btn change-btn" bindtap="uploadServiceQrcode">更换图片</button>
+          <button class="qrcode-btn delete-btn" bindtap="deleteServiceQrcode">删除</button>
+        </view>
+      </view>
+      <view class="tip">显示在"我的"页面联系客服弹窗中</view>
+    </view>
+
+    <!-- 店铺描述 -->
+    <view class="form-item">
+      <view class="form-label">店铺描述</view>
+      <input class="form-input large-input" placeholder="店铺描述（可选）" maxlength="20" value="{{shopinfo.description}}" bindinput="onDescriptionInput" />
+    </view>
+
+    <!-- 店铺位置 -->
+    <view class="form-item">
+      <view class="form-label">店铺位置</view>
+      <view class="location-info" wx:if="{{shopinfo.location.lat}}">
+        <text>已选位置：经度 {{shopinfo.location.lng}}，纬度 {{shopinfo.location.lat}}</text>
+      </view>
+      <button class="choose-location-btn" bindtap="chooseLocation">选择店铺位置</button>
+    </view>
+
+    <!-- 配送费规则 -->
+    <view class="form-item">
+      <view class="form-label">配送费规则</view>
+      <view class="rule-row">
+        <text>基础配送费（元）</text>
+        <input class="rule-input" type="digit" value="{{shopinfo.deliveryFeeRules.baseFee}}" bindinput="onBaseFeeInput" />
+      </view>
+      <view class="rule-row">
+        <text>基础距离（米）</text>
+        <input class="rule-input" type="number" value="{{shopinfo.deliveryFeeRules.baseDistance}}" bindinput="onBaseDistanceInput" />
+        <text class="tip">范围内只收基础费</text>
+      </view>
+      <view class="rule-row">
+        <text>超出后每公里加价（元）</text>
+        <input class="rule-input" type="digit" value="{{shopinfo.deliveryFeeRules.perKmFee}}" bindinput="onPerKmFeeInput" />
+      </view>
+      <view class="rule-row">
+        <text>最大配送距离（米）</text>
+        <input class="rule-input" type="number" value="{{shopinfo.deliveryFeeRules.maxDistance}}" bindinput="onMaxDistanceInput" />
+        <text class="tip">超出此距离无法配送</text>
+      </view>
+      <!-- 满额免配送费门槛 -->
+      <view class="rule-row">
+        <text>满额免配送费（元）</text>
+        <input class="rule-input" type="digit" placeholder="0表示不启用" value="{{shopinfo.deliveryFeeRules.freeDeliveryThreshold}}" bindinput="onFreeDeliveryThresholdInput" />
+        <text class="tip">订单商品总额满此金额则免配送费</text>
+      </view>
+    </view>
+
+    <!-- 起送金额 -->
+    <view class="form-item">
+      <view class="form-label">外卖起送金额（元）</view>
+      <input class="rule-input" type="digit" placeholder="0表示无限制" value="{{shopinfo.minDeliveryAmount}}" bindinput="onMinDeliveryAmountInput" />
+    </view>
+
+    <!-- 可选时间段 -->
+    <view class="form-item">
+      <view class="form-label">可选时间段</view>
+      <textarea class="time-slots-input" placeholder="每行输入一个时间段，例如 11:00-11:30" value="{{timeSlotsText}}" bindinput="onTimeSlotsInput" auto-height />
+      <view class="tip">用户下单时可选择这些时段（留空则只显示“立即”）</view>
+    </view>
+
+    <!-- 满额送抽奖门槛 -->
+    <view class="form-item">
+      <view class="form-label">满额送抽奖门槛（元）</view>
+      <input class="rule-input" type="digit" placeholder="0表示不赠送" value="{{shopinfo.freeLotteryThreshold}}" bindinput="onFreeLotteryThresholdInput" />
+      <view class="tip">订单商品总额满此金额，支付成功后赠送一次抽奖机会</view>
+    </view>
+
+    <!-- 开店/闭店开关 -->
+    <view class="form-item">
+      <view class="form-label">开店/闭店设置</view>
+      <view class="rule-row">
+        <text>店铺营业状态</text>
+        <switch checked="{{shopinfo.isOpen}}" bindchange="onIsOpenChange" color="#07c160" />
+      </view>
+      <view class="tip" wx:if="{{!shopinfo.isOpen}}" style="color: #e54d42;">当前为闭店状态，用户无法下单</view>
+      <view class="tip" wx:if="{{shopinfo.isOpen}}" style="color: #07c160;">当前为营业状态，用户可正常下单</view>
+    </view>
+
+    <!-- 商家新订单推送 -->
+    <view class="form-item">
+      <view class="form-label">商家新订单推送</view>
+      <view class="rule-row">
+        <text>开启新订单消息推送</text>
+        <switch checked="{{shopinfo.adminPushSettings.enableNewOrderMsg}}" bindchange="onEnableAdminOrderMsgChange" color="#07c160" />
+      </view>
+      <view class="rule-row">
+        <text>使用企业微信群机器人</text>
+        <switch checked="{{shopinfo.adminPushSettings.useQyWechat}}" bindchange="onUseQyWechatChange" color="#07c160" />
+      </view>
+      <block wx:if="{{shopinfo.adminPushSettings.useQyWechat}}">
+        <view class="rule-row">
+          <text>企业微信 Webhook</text>
+          <input class="rule-input" placeholder="填入企业微信群机器人地址" value="{{shopinfo.adminPushSettings.qyWechatWebhook}}" bindinput="onQyWechatWebhookInput" />
+        </view>
+        <view class="tip" style="color: #999; margin-left: 30rpx;">企业微信群机器人推送，群内所有人都能收到</view>
+      </block>
+      <view class="rule-row" wx:if="{{!shopinfo.adminPushSettings.useQyWechat}}">
+        <text>使用公众号模板消息</text>
+        <switch checked="{{shopinfo.adminPushSettings.useOfficialAccount}}" bindchange="onUseOfficialAccountChange" color="#07c160" />
+      </view>
+      <view class="rule-row" wx:if="{{!shopinfo.adminPushSettings.useQyWechat && !shopinfo.adminPushSettings.useOfficialAccount}}">
+        <text>小程序订阅消息模板ID</text>
+        <input class="rule-input" placeholder="请输入模板ID" value="{{shopinfo.adminPushSettings.newOrderMsgTemplateId}}" bindinput="onAdminOrderMsgTemplateIdInput" />
+      </view>
+      <block wx:if="{{shopinfo.adminPushSettings.useOfficialAccount}}">
+        <view class="rule-row">
+          <text>公众号 AppID</text>
+          <input class="rule-input" placeholder="请输入公众号 AppID" value="{{shopinfo.adminPushSettings.oaAppId}}" bindinput="onOaAppIdInput" />
+        </view>
+        <view class="rule-row">
+          <text>公众号 AppSecret</text>
+          <input class="rule-input" placeholder="请输入公众号 AppSecret" value="{{shopinfo.adminPushSettings.oaAppSecret}}" bindinput="onOaAppSecretInput" />
+        </view>
+        <view class="rule-row">
+          <text>公众号模板ID</text>
+          <input class="rule-input" placeholder="请输入公众号模板ID" value="{{shopinfo.adminPushSettings.oaTemplateId}}" bindinput="onOaTemplateIdInput" />
+        </view>
+      </block>
+    </view>
+
+    <button class="save-btn" type="primary" bindtap="saveShopInfo">保存</button>
+  </view>
+</view>

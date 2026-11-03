@@ -1,0 +1,11 @@
+{
+  "navigationBarTitleText": "确认订单",
+  "usingComponents": {
+    "van-tag": "/vant/tag/index",
+    "van-empty": "/vant/empty/index",
+    "avatar-nickname-modal": "/components/avatar-nickname-modal/index"
+  }
+}
+
+
+

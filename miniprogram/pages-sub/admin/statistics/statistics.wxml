@@ -1,0 +1,87 @@
+<!--pages-sub/admin/statistics/statistics.wxml-->
+<view class="page">
+  <!-- 标题 -->
+  <view class="page-header">
+    <text class="page-title">数据统计</text>
+    <text class="page-desc">查看自定义时段内的营收和商品销量</text>
+  </view>
+
+  <!-- 日期选择区 -->
+  <view class="date-section">
+    <view class="date-row">
+      <view class="date-item">
+        <text class="date-label">开始日期</text>
+        <picker mode="date" value="{{startDate}}" end="{{today}}" bindchange="onStartDateChange">
+          <view class="date-picker">{{startDate || '请选择'}}</view>
+        </picker>
+      </view>
+      <text class="date-separator">至</text>
+      <view class="date-item">
+        <text class="date-label">结束日期</text>
+        <picker mode="date" value="{{endDate}}" end="{{today}}" bindchange="onEndDateChange">
+          <view class="date-picker">{{endDate || '请选择'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <!-- 快捷选择 -->
+    <view class="quick-range">
+      <view class="quick-item {{startDate === today && endDate === today ? 'active' : ''}}" data-range="today" bindtap="onQuickRange">今日</view>
+      <view class="quick-item" data-range="yesterday" bindtap="onQuickRange">昨日</view>
+      <view class="quick-item" data-range="week" bindtap="onQuickRange">近7天</view>
+      <view class="quick-item" data-range="month" bindtap="onQuickRange">近30天</view>
+    </view>
+
+    <button class="search-btn" bindtap="loadStatistics" loading="{{loading}}" style="background-color: {{themeColor}};">查询统计</button>
+  </view>
+
+  <!-- 数据概览卡片 -->
+  <view class="summary-section" wx:if="{{hasData}}">
+    <view class="summary-title">数据概览</view>
+    <view class="summary-grid">
+      <view class="summary-card card-revenue">
+        <text class="card-label">总收入</text>
+        <text class="card-value">¥{{summary.totalRevenue}}</text>
+      </view>
+      <view class="summary-card card-refund">
+        <text class="card-label">退款金额</text>
+        <text class="card-value">¥{{summary.totalRefund}}</text>
+      </view>
+      <view class="summary-card card-net">
+        <text class="card-label">净收入</text>
+        <text class="card-value">¥{{summary.netIncome}}</text>
+      </view>
+      <view class="summary-card card-count">
+        <text class="card-label">有效订单</text>
+        <text class="card-value">{{summary.orderCount}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品销量排行 -->
+  <view class="product-section" wx:if="{{hasData && productList.length > 0}}">
+    <view class="section-header">
+      <text class="section-title">商品销量排行</text>
+    </view>
+    <view class="product-list">
+      <view class="product-item" wx:for="{{productList}}" wx:key="name">
+        <view class="product-rank rank-{{index < 3 ? index + 1 : 'other'}}">{{index + 1}}</view>
+        <view class="product-info">
+          <text class="product-name">{{item.name}}</text>
+          <text class="product-amount">销售额 ¥{{item.amount}}</text>
+        </view>
+        <view class="product-count">×{{item.count}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-tip" wx:if="{{hasData && productList.length === 0}}">
+    <text>该时段暂无数据</text>
+  </view>
+
+  <!-- 初始状态 -->
+  <view class="init-tip" wx:if="{{!hasData && !loading}}">
+    <text>请选择日期范围后查询</text>
+  </view>
+</view>

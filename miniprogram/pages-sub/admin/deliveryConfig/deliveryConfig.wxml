@@ -1,0 +1,16 @@
+<view class="page">
+  <view class="form-item">
+    <view class="label">腾讯地图 Key</view>
+    <input placeholder="请输入Key" value="{{config.mapKey}}" bindinput="onMapKeyInput"/>
+  </view>
+  <view class="form-item">
+    <view class="label">店铺纬度</view>
+    <input type="digit" placeholder="如 23.123456" value="{{config.shopLat}}" bindinput="onShopLatInput"/>
+  </view>
+  <view class="form-item">
+    <view class="label">店铺经度</view>
+    <input type="digit" placeholder="如 113.123456" value="{{config.shopLng}}" bindinput="onShopLngInput"/>
+  </view>
+  <view class="tiers-info">阶梯收费（后续可在此编辑更多阶梯）</view>
+  <button type="primary" bindtap="save">保存</button>
+</view>

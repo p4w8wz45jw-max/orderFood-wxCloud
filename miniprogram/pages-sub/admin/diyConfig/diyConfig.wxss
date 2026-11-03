@@ -1,0 +1,245 @@
+/* pages-sub/admin/diyConfig/diyConfig.wxss */
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+  padding-bottom: 60rpx;
+}
+
+.form-section {
+  background: #fff;
+  border-radius: 12rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+}
+
+.form-item {
+  margin-bottom: 20rpx;
+}
+
+.form-label {
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10rpx 0;
+  font-size: 28rpx;
+  color: #555;
+}
+
+.tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 12rpx;
+}
+
+/* 选项行 */
+.option-item {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.option-input {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 12rpx 16rpx;
+  font-size: 28rpx;
+  height: 64rpx;
+  box-sizing: border-box;
+  background: #fafafa;
+}
+
+.option-input.name {
+  flex: 1;
+}
+
+.price-wrap {
+  display: flex;
+  align-items: center;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  background: #fafafa;
+  overflow: hidden;
+}
+
+.price-prefix {
+  font-size: 28rpx;
+  color: #999;
+  padding-left: 16rpx;
+}
+
+.price-wrap .option-input {
+  width: 140rpx;
+  border: none;
+  background: transparent;
+  padding-left: 8rpx;
+}
+
+.remove-btn {
+  color: #e54d42;
+  font-size: 26rpx;
+  padding: 12rpx 16rpx;
+  border: 1rpx solid #f0c0b8;
+  border-radius: 8rpx;
+  background: #fff5f3;
+}
+
+.add-btn {
+  text-align: center;
+  color: #B8956E;
+  font-size: 28rpx;
+  padding: 18rpx 0;
+  border: 1rpx dashed #d4b895;
+  border-radius: 8rpx;
+  background: #fdf8f1;
+}
+
+.save-btn {
+  width: 100%;
+  margin-top: 20rpx;
+  border-radius: 8rpx;
+  color: #fff;
+}
+
+/* 套餐区块头 */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.option-block {
+  margin-bottom: 20rpx;
+}
+
+/* 套餐整体价格输入 */
+.price-input-row {
+  display: flex;
+  align-items: center;
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  background: #fafafa;
+  padding: 12rpx 16rpx;
+}
+
+.price-prefix {
+  font-size: 30rpx;
+  color: #999;
+  margin-right: 8rpx;
+}
+
+.price-input {
+  flex: 1;
+  font-size: 30rpx;
+  height: 56rpx;
+  background: transparent;
+}
+
+.price-unit {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* DIY配送费规则网格 */
+.rule-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+}
+
+.rule-cell {
+  border: 1rpx solid #eee;
+  border-radius: 8rpx;
+  padding: 16rpx;
+  background: #fff;
+}
+
+.rule-label {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.rule-cell .price-input-row {
+  padding: 8rpx 12rpx;
+}
+
+/* 用户建议 */
+.suggest-loading {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 30rpx 0;
+}
+
+.suggest-empty {
+  text-align: center;
+  color: #999;
+  font-size: 26rpx;
+  padding: 30rpx 0;
+}
+
+.suggest-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.suggest-item:last-child {
+  border-bottom: none;
+}
+
+.suggest-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.suggest-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.5;
+  word-break: break-all;
+}
+
+.suggest-meta {
+  margin-top: 10rpx;
+  display: flex;
+  align-items: center;
+  font-size: 22rpx;
+  color: #999;
+}
+
+.suggest-phone {
+  margin-left: 12rpx;
+}
+
+.suggest-time {
+  margin-left: 12rpx;
+}
+
+.suggest-del {
+  flex-shrink: 0;
+  margin-left: 16rpx;
+  color: #e54d42;
+  font-size: 24rpx;
+  border: 1rpx solid #f0c0b8;
+  border-radius: 8rpx;
+  padding: 10rpx 18rpx;
+  background: #fff5f3;
+}

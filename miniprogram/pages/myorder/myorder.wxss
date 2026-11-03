@@ -1,0 +1,276 @@
+/* pages/myorder/myorder.wxss - 温暖奶油风 */
+.page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #F5EDE4;
+}
+
+/* 标签栏 */
+.tabs {
+  background: #FFFBF7;
+  display: flex;
+  padding: 0 30rpx;
+  border-bottom: 1rpx solid rgba(160, 128, 96, 0.10);
+}
+
+.tab-item {
+  position: relative;
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+}
+
+.tab-text {
+  font-size: 30rpx;
+  color: #8B7355;
+  transition: all 0.3s;
+}
+
+.tab-item.active .tab-text {
+  font-weight: bold;
+  /* 颜色由内联 style 控制 */
+}
+
+.tab-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60rpx;
+  height: 6rpx;
+  border-radius: 3rpx;
+  /* 背景色由内联 style 控制 */
+}
+
+/* 订单列表 */
+.order-list {
+  flex: 1;
+  padding: 20rpx;
+}
+
+.order-item {
+  background: #FFFBF7;
+  border-radius: 20rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(139, 115, 85, 0.06);
+  border: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+/* 订单头部 */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+.order-user-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.user-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background: #F0E6D8;
+}
+
+.user-info-text {
+  flex: 1;
+}
+
+.user-name {
+  font-size: 28rpx;
+  color: #5C4A3A;
+  font-weight: bold;
+  margin-bottom: 5rpx;
+}
+
+.user-phone {
+  font-size: 24rpx;
+  color: #8B7355;
+}
+
+.order-type {
+  font-size: 26rpx;
+  color: #8B7355;
+}
+.order-type-row {
+  display: flex;
+  align-items: center;
+}
+.order-type-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 6rpx;
+}
+
+/* 订单内容 */
+.order-content {
+  padding: 30rpx;
+}
+
+/* 充值订单信息 */
+.recharge-info {
+  padding: 20rpx;
+  background: #FAF6F1;
+  border-radius: 12rpx;
+}
+
+.recharge-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15rpx;
+}
+
+.recharge-item:last-child {
+  margin-bottom: 0;
+}
+
+.recharge-label {
+  font-size: 28rpx;
+  color: #8B7355;
+}
+
+.recharge-value {
+  font-size: 30rpx;
+  color: #5C4A3A;
+  font-weight: bold;
+}
+
+.recharge-value.gift {
+  color: #D4A574;
+}
+
+.recharge-value.total {
+  color: #B8956E;
+  font-size: 36rpx;
+}
+
+/* 点餐订单商品列表 */
+.goods-list {
+  margin-bottom: 20rpx;
+}
+
+.goods-item {
+  display: flex;
+  margin-bottom: 20rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+.goods-item:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.goods-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+}
+
+.goods-info {
+  flex: 1;
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.goods-name {
+  font-size: 28rpx;
+  color: #5C4A3A;
+  margin-bottom: 10rpx;
+}
+
+/* 商品标签 */
+.goods-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 10rpx;
+}
+
+.tag-text {
+  font-size: 22rpx;
+  color: #B8956E;
+  background: rgba(184, 149, 110, 0.10);
+  padding: 4rpx 12rpx;
+  border-radius: 8rpx;
+  border: 1rpx solid rgba(184, 149, 110, 0.20);
+}
+
+.goods-detail {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.goods-price {
+  font-size: 28rpx;
+  color: #B8956E;
+  font-weight: bold;
+}
+
+.goods-count {
+  font-size: 26rpx;
+  color: #8B7355;
+}
+
+/* 免单标识 */
+.miandan-tag {
+  background: linear-gradient(135deg, #E8D4B8 0%, #F0E0CC 100%);
+  color: #8B6E4A;
+  padding: 12rpx 20rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  text-align: center;
+  margin-top: 10rpx;
+}
+
+/* 订单底部 */
+.order-footer {
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid rgba(160, 128, 96, 0.08);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.order-time {
+  font-size: 24rpx;
+  color: #8B7355;
+}
+
+.order-status {
+  font-size: 24rpx;
+  color: #B8956E;
+  padding: 4rpx 16rpx;
+  background: rgba(184, 149, 110, 0.12);
+  border-radius: 20rpx;
+}
+
+.order-status.status-cancelled {
+  color: #A09888;
+  background: #F0E6D8;
+}
+
+.order-status.status-refunded {
+  color: #FF6B6B;
+  background: rgba(255, 107, 107, 0.1);
+}
+
+.order-status.status-refunding {
+  color: #FF8C00;
+  background: rgba(255, 140, 0, 0.12);
+}

@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "点餐",
+  "navigationStyle": "custom",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "van-notice-bar": "/vant/notice-bar/index",
+    "avatar-nickname-modal": "/components/avatarNicknameModal/avatarNicknameModal"
+  }
+}

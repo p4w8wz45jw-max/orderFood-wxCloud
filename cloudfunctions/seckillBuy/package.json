@@ -1,0 +1,9 @@
+{
+  "name": "seckillBuy",
+  "version": "1.0.0",
+  "description": "秒杀下单云函数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "getCouponSources",
+  "version": "1.0.0",
+  "description": "按 user_coupons _id 批量查询优惠券来源",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

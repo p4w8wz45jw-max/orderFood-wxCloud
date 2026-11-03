@@ -1,0 +1,9 @@
+{
+  "name": "adminSaveData",
+  "version": "1.0.0",
+  "description": "管理后台数据保存云函数，绕过_openid权限限制",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

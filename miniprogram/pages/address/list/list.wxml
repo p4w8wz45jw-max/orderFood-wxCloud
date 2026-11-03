@@ -1,0 +1,38 @@
+<view class="container">
+  <block wx:if="{{addresses.length > 0}}">
+    <!-- 选择模式（外卖下单用） -->
+    <block wx:if="{{selectMode}}">
+      <view class="address-item" wx:for="{{addresses}}" wx:key="_id">
+        <view class="info" bindtap="onSelectAddress" data-address="{{item}}">
+          <view class="name-phone">{{item.name}} {{item.phone}}</view>
+          <view class="detail">{{item.locationName || item.address}} {{item.detail}}</view>
+          <view wx:if="{{item.isDefault}}" class="default-tag">默认</view>
+        </view>
+        <view class="delete-icon" catchtap="deleteAddress" data-id="{{item._id}}">删除</view>
+      </view>
+    </block>
+
+    <!-- 管理模式 -->
+    <block wx:else>
+      <view class="address-item" wx:for="{{addresses}}" wx:key="_id">
+        <view class="info">
+          <view class="name-phone">{{item.name}} {{item.phone}}</view>
+          <view class="detail">{{item.locationName || item.address}} {{item.detail}}</view>
+          <view wx:if="{{item.isDefault}}" class="default-tag">默认</view>
+        </view>
+        <view class="actions">
+          <button size="mini" type="default" wx:if="{{!item.isDefault}}"
+                  bindtap="setDefault" data-id="{{item._id}}">设为默认</button>
+          <button size="mini" type="default" bindtap="editAddress" data-address="{{item}}">编辑</button>
+          <button size="mini" type="warn" bindtap="deleteAddress" data-id="{{item._id}}">删除</button>
+        </view>
+      </view>
+    </block>
+  </block>
+
+  <block wx:else>
+    <view class="empty">暂无收货地址，点击下方按钮添加</view>
+  </block>
+
+  <button class="add-btn" type="primary" bindtap="addAddress">新增地址</button>
+</view>

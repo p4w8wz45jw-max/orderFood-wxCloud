@@ -1,0 +1,9 @@
+{
+  "name": "getUserOrders",
+  "version": "1.0.0",
+  "description": "后台会员管理：查询用户历史订单与总消费",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

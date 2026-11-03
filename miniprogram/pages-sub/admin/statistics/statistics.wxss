@@ -1,0 +1,210 @@
+/* pages-sub/admin/statistics/statistics.wxss */
+.page {
+  padding: 24rpx;
+  padding-bottom: 60rpx;
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+
+/* 页面头部 */
+.page-header {
+  margin-bottom: 30rpx;
+}
+.page-title {
+  font-size: 40rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+}
+.page-desc {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 6rpx;
+}
+
+/* 日期选择区 */
+.date-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.date-row {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+.date-item {
+  flex: 1;
+}
+.date-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 10rpx;
+  display: block;
+}
+.date-separator {
+  font-size: 28rpx;
+  color: #666;
+  margin: 0 20rpx 14rpx;
+  flex: none;
+}
+.date-picker {
+  font-size: 28rpx;
+  color: #333;
+  background: #f7f7f7;
+  border-radius: 12rpx;
+  padding: 16rpx 20rpx;
+  text-align: center;
+}
+
+/* 快捷选择 */
+.quick-range {
+  display: flex;
+  margin-top: 24rpx;
+  gap: 16rpx;
+}
+.quick-item {
+  flex: 1;
+  text-align: center;
+  font-size: 24rpx;
+  color: #666;
+  background: #f7f7f7;
+  border-radius: 10rpx;
+  padding: 12rpx 0;
+  transition: all 0.2s;
+}
+.quick-item.active {
+  background: #B8956E;
+  color: #fff;
+}
+
+/* 查询按钮 */
+.search-btn {
+  margin-top: 30rpx;
+  color: #fff;
+  border-radius: 12rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  border: none;
+}
+.search-btn[loading] {
+  opacity: 0.7;
+}
+
+/* 数据概览 */
+.summary-section {
+  margin-bottom: 30rpx;
+}
+.summary-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.summary-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+.summary-card {
+  width: calc(50% - 8rpx);
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 28rpx 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.card-label {
+  font-size: 24rpx;
+  color: #999;
+  display: block;
+  margin-bottom: 10rpx;
+}
+.card-value {
+  font-size: 36rpx;
+  font-weight: bold;
+}
+.card-revenue .card-value { color: #07c160; }
+.card-refund .card-value { color: #ee5a24; }
+.card-net .card-value { color: #333; }
+.card-count .card-value { color: #1989fa; }
+
+/* 商品销量 */
+.product-section {
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.section-title {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+.product-list {}
+.product-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+.product-item:last-child {
+  border-bottom: none;
+}
+.product-rank {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+  background: #ccc;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+.rank-1 { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+.rank-2 { background: linear-gradient(135deg, #ffa502, #eccc68); color: #333; }
+.rank-3 { background: linear-gradient(135deg, #70a1ff, #5352ed); }
+.product-info {
+  flex: 1;
+  overflow: hidden;
+}
+.product-name {
+  font-size: 28rpx;
+  color: #333;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.product-amount {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 4rpx;
+  display: block;
+}
+.product-count {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  flex-shrink: 0;
+  margin-left: 16rpx;
+}
+
+/* 空状态 */
+.empty-tip, .init-tip {
+  text-align: center;
+  padding: 80rpx 0;
+  color: #ccc;
+  font-size: 28rpx;
+}

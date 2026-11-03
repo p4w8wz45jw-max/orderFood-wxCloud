@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "邀请有奖",
+  "usingComponents": {
+    "van-empty": "/vant/empty/index"
+  }
+}

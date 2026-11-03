@@ -1,0 +1,200 @@
+/* pages/orderDetail/orderDetail.wxss - 温暖奶油风 */
+.container {
+  background: #F5EDE4;
+  min-height: 100vh;
+  padding: 20rpx;
+}
+
+.status-bar {
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  text-align: center;
+  /* 背景色由内联 style 控制 */
+}
+
+.status-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: white;
+}
+
+.info-card, .goods-card {
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139, 115, 85, 0.05);
+  border: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+.card-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  padding-bottom: 10rpx;
+  border-bottom: 1rpx solid rgba(160, 128, 96, 0.10);
+  color: #5C4A3A;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-info-btn {
+  font-size: 24rpx;
+  font-weight: normal;
+  color: #B8956E;
+  border: 1rpx solid #B8956E;
+  border-radius: 8rpx;
+  padding: 4rpx 20rpx;
+}
+
+.info-row {
+  display: flex;
+  margin-bottom: 16rpx;
+  font-size: 28rpx;
+}
+
+.info-row .label {
+  width: 160rpx;
+  color: #8B7355;
+}
+
+.info-row .value {
+  color: #5C4A3A;
+}
+
+/* 可点击拨打手机号 */
+.phone-value {
+  color: #B8956E;
+  text-decoration: underline;
+  flex: 1;
+}
+
+.receiver-name {
+  margin-right: 16rpx;
+}
+
+.goods-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+.goods-image {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.goods-info {
+  flex: 1;
+}
+
+.goods-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 8rpx;
+}
+
+.goods-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-bottom: 12rpx;
+}
+
+.goods-tag {
+  font-size: 22rpx;
+  color: #B8956E;
+  background: rgba(184, 149, 110, 0.1);
+  border: 1rpx solid rgba(184, 149, 110, 0.25);
+  border-radius: 6rpx;
+  padding: 2rpx 10rpx;
+  white-space: nowrap;
+}
+
+.goods-price-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.goods-price {
+  font-size: 28rpx;
+  color: #B8956E;
+  font-weight: bold;
+}
+
+.goods-count {
+  font-size: 24rpx;
+  color: #8B7355;
+}
+
+.goods-subtotal {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  flex-shrink: 0;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20rpx;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+}
+
+.total-row .total-price {
+  color: #B8956E;
+}
+
+/* 费用明细 */
+.breakdown-section {
+  margin-top: 24rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx dashed #e0d6cc;
+}
+.breakdown-title {
+  font-size: 26rpx;
+  color: #8B7355;
+  margin-bottom: 12rpx;
+}
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 26rpx;
+  color: #5C4A3A;
+  padding: 4rpx 0;
+}
+.breakdown-row.total {
+  font-weight: bold;
+  font-size: 28rpx;
+  color: #333;
+  padding-top: 8rpx;
+}
+.discount-val {
+  color: #e74c3c;
+}
+.coupon-name {
+  flex: 1;
+  margin-right: 16rpx;
+  color: #B8956E;
+}
+.final-val {
+  color: #e74c3c;
+  font-weight: bold;
+}
+
+.empty-tip {
+  text-align: center;
+  margin-top: 200rpx;
+  color: #8B7355;
+  font-size: 28rpx;
+}

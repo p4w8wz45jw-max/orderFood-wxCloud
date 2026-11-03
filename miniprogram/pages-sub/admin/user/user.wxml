@@ -1,0 +1,361 @@
+<!--pages/admin/user/user.wxml-->
+<wxs module="priceHelper" src="/utils/priceHelper.wxs"></wxs>
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input 
+      class="search-input" 
+      placeholder="搜索用户昵称或手机号" 
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="doSearch"
+    />
+    <view class="search-btn" bindtap="doSearch">搜索</view>
+    <view class="clear-btn" wx:if="{{searchKeyword}}" bindtap="clearSearch">清空</view>
+  </view>
+
+  <!-- 用户列表 -->
+  <view class="user-list">
+    <view class="user-item" wx:for="{{users}}" wx:key="_id">
+      <view class="user-avatar">
+        <image wx:if="{{item.avatarUrl}}" src="{{item.avatarUrl}}" mode="aspectFill"></image>
+        <view wx:else class="default-avatar">
+          <text>👤</text>
+        </view>
+      </view>
+      <view class="user-info">
+        <view class="user-name">
+          {{item.nickName || '未知昵称'}}
+        </view>
+        <view class="user-detail phone-clickable" catchtap="callPhone" data-phone="{{item.phoneNumber}}">
+          <view class="user-detail-row">
+            <text class="detail-emoji">📱</text>
+            <text>{{item.phoneNumber || '未绑定号码'}}</text>
+            <text class="balance-arrow" wx:if="{{item.phoneNumber}}">📞</text>
+          </view>
+        </view>
+        <view class="user-detail balance-clickable" catchtap="showBalanceDetailModal" data-user="{{item}}">
+          <view class="user-detail-row">
+            <text class="detail-emoji">💰</text>
+            <text>余额: ¥{{priceHelper.formatBalance(item.balance)}}</text>
+            <text class="balance-arrow">›</text>
+          </view>
+        </view>
+        <view class="user-detail balance-clickable" catchtap="showPointsDetailModal" data-user="{{item}}">
+          <view class="user-detail-row">
+            <text class="detail-emoji">⭐</text>
+            <text>积分: {{item.points || 0}}</text>
+            <text class="balance-arrow">›</text>
+          </view>
+        </view>
+      </view>
+      <view class="user-actions">
+        <view class="action-btn view-order-btn" catchtap="showOrdersModal" data-user="{{item}}">历史订单</view>
+        <view class="action-btn view-coupon-btn" catchtap="showCouponsModal" data-user="{{item}}">查看优惠券</view>
+        <view class="action-btn balance-btn" catchtap="showEditBalanceModal" data-user="{{item}}">修改余额</view>
+        <view class="action-btn points-btn" catchtap="showEditPointsModal" data-user="{{item}}">修改积分</view>
+        <view class="action-btn coupon-btn" catchtap="showGiftCouponModal" data-user="{{item}}">赠送优惠券</view>
+      </view>
+    </view>
+
+    <van-empty wx:if="{{users.length === 0}}" description="暂无用户数据" />
+  </view>
+
+  <!-- 编辑余额弹窗 -->
+  <view class="modal-mask" wx:if="{{showBalanceModal}}" catchtap="closeBalanceModal">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">修改会员余额</view>
+      <view class="modal-content">
+        <view class="user-preview">
+          <view class="preview-avatar">
+            <image wx:if="{{currentUser.avatarUrl}}" src="{{currentUser.avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="default-avatar">
+              <text>👤</text>
+            </view>
+          </view>
+          <view class="preview-name">{{currentUser.nickName || '未设置'}}</view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">账户余额</view>
+          <input 
+            class="form-input" 
+            type="digit" 
+            placeholder="请输入余额" 
+            value="{{editBalance}}"
+            bindinput="onBalanceInput"
+          />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closeBalanceModal">取消</view>
+        <view class="modal-btn confirm" bindtap="saveBalance">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 修改积分弹窗 -->
+  <view class="modal-mask" wx:if="{{showPointsModal}}" catchtap="closePointsModal">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">修改会员积分</view>
+      <view class="modal-content">
+        <view class="user-preview">
+          <view class="preview-avatar">
+            <image wx:if="{{currentUser.avatarUrl}}" src="{{currentUser.avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="default-avatar">
+              <text>👤</text>
+            </view>
+          </view>
+          <view class="preview-name">{{currentUser.nickName || '未设置'}}</view>
+          <view class="preview-current">当前积分: {{currentUser.points || 0}}</view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">新积分值</view>
+          <input 
+            class="form-input" 
+            type="number" 
+            placeholder="请输入积分值" 
+            value="{{editPoints}}"
+            bindinput="onPointsInput"
+          />
+        </view>
+        <view class="form-item">
+          <view class="form-label">变动说明</view>
+          <input 
+            class="form-input" 
+            placeholder="如：手动调整、活动奖励等" 
+            value="{{pointsReason}}"
+            bindinput="onPointsReasonInput"
+          />
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closePointsModal">取消</view>
+        <view class="modal-btn confirm" bindtap="savePoints">保存</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 赠送优惠券弹窗 -->
+  <view class="modal-mask" wx:if="{{showGiftCouponModal}}" catchtap="closeGiftCouponModal">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">赠送优惠券</view>
+      <view class="modal-content">
+        <view class="user-preview">
+          <view class="preview-avatar">
+            <image wx:if="{{currentUser.avatarUrl}}" src="{{currentUser.avatarUrl}}" mode="aspectFill"></image>
+            <view wx:else class="default-avatar">
+              <text>👤</text>
+            </view>
+          </view>
+          <view class="preview-name">{{currentUser.nickName || '未设置'}}</view>
+        </view>
+
+        <view class="form-item">
+          <view class="form-label">选择优惠券</view>
+          <picker wx:if="{{couponList.length > 0}}" mode="selector" range="{{couponList}}" range-key="name" value="{{selectedCouponIndex}}" bindchange="onCouponSelect">
+            <view class="picker-display">
+              <text>{{couponList[selectedCouponIndex].name || '请选择'}}</text>
+              <text class="picker-arrow">▼</text>
+            </view>
+          </picker>
+          <view class="picker-display disabled" wx:else>
+            <text>暂无可用优惠券</text>
+          </view>
+        </view>
+
+        <view class="coupon-preview" wx:if="{{couponList.length > 0}}">
+          <view class="coupon-preview-card">
+            <view class="coupon-preview-type">
+              {{couponList[selectedCouponIndex].type === 'full_reduction' ? '满减券' : couponList[selectedCouponIndex].type === 'discount' ? '折扣券' : '商品券'}}
+            </view>
+            <view class="coupon-preview-value" wx:if="{{couponList[selectedCouponIndex].type === 'full_reduction'}}">
+              满{{couponList[selectedCouponIndex].condition}}减{{couponList[selectedCouponIndex].value}}
+            </view>
+            <view class="coupon-preview-value" wx:if="{{couponList[selectedCouponIndex].type === 'discount'}}">
+              {{couponList[selectedCouponIndex].discount * 10}}折
+            </view>
+            <view class="coupon-preview-value" wx:if="{{couponList[selectedCouponIndex].type === 'product'}}">
+              商品: {{couponList[selectedCouponIndex].productName || '未指定'}}
+            </view>
+            <view class="coupon-preview-expire">有效期: {{couponList[selectedCouponIndex].expireDays || 30}}天</view>
+          </view>
+        </view>
+      </view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closeGiftCouponModal">取消</view>
+        <view class="modal-btn confirm" bindtap="saveGiftCoupon">确认赠送</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户历史订单弹窗 -->
+  <view class="modal-mask" wx:if="{{showOrdersModal}}" catchtap="closeOrdersModal">
+    <view class="modal-dialog orders-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>历史订单</text>
+        <view class="balance-total" wx:if="{{userOrderStats}}">
+          共 <text class="balance-total-num">{{userOrderStats.totalOrders}}</text> 单 · 消费 <text class="balance-total-num">¥{{userOrderStats.totalSpent}}</text> · 充值 <text class="balance-total-num">¥{{userOrderStats.totalRecharge}}</text>
+        </view>
+      </view>
+      <scroll-view class="orders-content" scroll-y>
+        <view wx:if="{{orderDetailLoading}}" class="balance-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{userOrders.length === 0}}" class="balance-empty">
+          <text>该用户暂无订单</text>
+        </view>
+        <view wx:else class="orders-list">
+          <view class="order-item" wx:for="{{userOrders}}" wx:key="_id" bindtap="goOrderDetail" data-order="{{item}}">
+            <view class="order-item-top">
+              <text class="order-item-type">{{item.orderTypeText}}</text>
+              <text class="order-item-status {{item.paid ? 'paid' : 'unpaid'}}">{{item.statusText}}</text>
+            </view>
+            <view class="order-item-goods">{{item.goodsText}}</view>
+            <view class="order-item-bottom">
+              <text class="order-item-time">{{item.createTimeText}}</text>
+              <text class="order-item-price">¥{{item.finalPriceText}}</text>
+            </view>
+            <view class="order-item-arrow">›</view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closeOrdersModal">关闭</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户优惠券弹窗 -->
+  <view class="modal-mask" wx:if="{{showCouponsModal}}" catchtap="closeCouponsModal">
+    <view class="modal-dialog coupons-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>优惠券明细</text>
+        <view class="balance-total" wx:if="{{userCouponStats}}">
+          共 <text class="balance-total-num">{{userCouponStats.total}}</text> 张（未用 {{userCouponStats.unused}} · 已用 {{userCouponStats.used}} · 过期 {{userCouponStats.expired}}）
+        </view>
+      </view>
+      <view class="coupon-filter-tabs">
+        <view class="coupon-filter-tab {{couponFilter === 'all' ? 'active' : ''}}" data-filter="all" bindtap="onCouponFilter">全部</view>
+        <view class="coupon-filter-tab {{couponFilter === 'unused' ? 'active' : ''}}" data-filter="unused" bindtap="onCouponFilter">未用 {{userCouponStats.unused}}</view>
+        <view class="coupon-filter-tab {{couponFilter === 'used' ? 'active' : ''}}" data-filter="used" bindtap="onCouponFilter">已用 {{userCouponStats.used}}</view>
+        <view class="coupon-filter-tab {{couponFilter === 'expired' ? 'active' : ''}}" data-filter="expired" bindtap="onCouponFilter">过期 {{userCouponStats.expired}}</view>
+      </view>
+      <scroll-view class="coupons-content" scroll-y>
+        <view wx:if="{{couponDetailLoading}}" class="balance-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{filteredUserCoupons.length === 0}}" class="balance-empty">
+          <text>{{userCoupons.length === 0 ? '该用户暂无优惠券' : '当前筛选下暂无优惠券'}}</text>
+        </view>
+        <view wx:else class="coupons-list">
+          <view class="coupon-item" wx:for="{{filteredUserCoupons}}" wx:key="_id">
+            <view class="coupon-item-top">
+              <text class="coupon-item-name">{{item.name}}</text>
+              <text class="coupon-item-status {{item.status}}">{{item.statusText}}</text>
+            </view>
+            <view class="coupon-item-meta">
+              <text class="coupon-item-type">{{item.typeText}}</text>
+              <text class="coupon-item-source" wx:if="{{item.sourceText}}">来源：{{item.sourceText}}</text>
+            </view>
+            <view class="coupon-item-time">
+              <text wx:if="{{item.createTimeText}}">获取：{{item.createTimeText}}</text>
+              <text wx:if="{{item.usedTimeText}}"> · 使用：{{item.usedTimeText}}</text>
+            </view>
+            <view class="coupon-item-time" wx:if="{{item.expireTimeText}}">
+              <text>过期：{{item.expireTimeText}}</text>
+            </view>
+            <view class="coupon-item-footer">
+              <view class="coupon-item-delete" catchtap="deleteUserCoupon" data-coupon="{{item}}">删除</view>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closeCouponsModal">关闭</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 余额明细弹窗 -->
+  <view class="modal-mask" wx:if="{{showBalanceDetail}}" catchtap="closeBalanceDetail">
+    <view class="modal-dialog balance-detail-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>余额明细</text>
+        <view class="balance-total">
+          当前余额: <text class="balance-total-num">¥{{priceHelper.formatBalance(currentUser.balance)}}</text>
+        </view>
+      </view>
+      <scroll-view class="balance-detail-content" scroll-y>
+        <view wx:if="{{balanceDetailLoading}}" class="balance-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{balanceHistory.length === 0}}" class="balance-empty">
+          <text>暂无余额变动记录</text>
+        </view>
+        <view wx:else class="balance-list">
+          <view class="balance-item" wx:for="{{balanceHistory}}" wx:key="id">
+            <view class="balance-item-left">
+              <view class="balance-item-icon {{item.isIncome ? 'income-icon' : 'expense-icon'}}">
+                <text wx:if="{{item.type === 'recharge'}}">💳</text>
+                <text wx:elif="{{item.type === 'order_pay'}}">🛒</text>
+                <text wx:else>✏️</text>
+              </view>
+              <view class="balance-item-info">
+                <view class="balance-item-desc">{{item.description}}</view>
+                <view class="balance-item-date">{{item.date}}</view>
+              </view>
+            </view>
+            <view class="balance-item-amount {{item.isIncome ? 'income' : 'expense'}}">
+              {{item.isIncome ? '+' : ''}}¥{{item.isIncome ? item.amount.toFixed(2) : Math.abs(item.amount).toFixed(2)}}
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closeBalanceDetail">关闭</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 积分明细弹窗 -->
+  <view class="modal-mask" wx:if="{{showPointsDetail}}" catchtap="closePointsDetail">
+    <view class="modal-dialog points-detail-dialog" catchtap="stopPropagation">
+      <view class="modal-title">
+        <text>积分明细</text>
+        <view class="balance-total">
+          当前积分: <text class="balance-total-num points-total-num">{{pointsTotalText}}</text>
+        </view>
+      </view>
+      <scroll-view class="balance-detail-content" scroll-y>
+        <view wx:if="{{pointsDetailLoading}}" class="balance-loading">
+          <text>加载中...</text>
+        </view>
+        <view wx:elif="{{pointsHistory.length === 0}}" class="balance-empty">
+          <text>暂无积分变动记录</text>
+        </view>
+        <view wx:else class="balance-list">
+          <view class="balance-item" wx:for="{{pointsHistory}}" wx:key="id">
+            <view class="balance-item-left">
+              <view class="balance-item-icon {{item.isIncome ? 'income-icon' : 'expense-icon'}}">
+                <text wx:if="{{item.isIncome}}">⭐</text>
+                <text wx:else>📤</text>
+              </view>
+              <view class="balance-item-info">
+                <view class="balance-item-desc">{{item.description}}</view>
+                <view class="balance-item-date">{{item.date}}</view>
+              </view>
+            </view>
+            <view class="balance-item-amount {{item.isIncome ? 'income' : 'expense'}}">
+              {{item.signedAmount}} 积分
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn confirm" bindtap="closePointsDetail">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,351 @@
+/* pages/recharge/recharge.wxss - 温暖奶油风 */
+.page {
+  min-height: 100vh;
+  background: #F5EDE4;
+  padding-bottom: 120rpx;
+}
+
+/* 会员卡 */
+.member-card {
+  margin: 20rpx;
+  padding: 40rpx 30rpx;
+  border-radius: 20rpx;
+  box-shadow: 0 8rpx 30rpx rgba(139, 115, 85, 0.15);
+}
+
+.member-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 30rpx;
+}
+
+.member-title {
+  display: flex;
+  align-items: center;
+}
+
+.member-label {
+  color: white;
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-right: 10rpx;
+}
+
+.member-icon {
+  font-size: 32rpx;
+}
+
+.member-balance {
+  text-align: right;
+}
+
+.balance-label {
+  color: rgba(255,255,255,0.85);
+  font-size: 24rpx;
+  display: block;
+  margin-bottom: 8rpx;
+}
+
+.balance-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+
+.balance-symbol {
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.balance-num {
+  color: white;
+  font-size: 48rpx;
+  font-weight: bold;
+}
+
+.member-tips {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 20rpx;
+  border-top: 1rpx solid rgba(255,255,255,0.2);
+}
+
+.tip-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.tip-icon {
+  font-size: 32rpx;
+  margin-bottom: 8rpx;
+}
+
+.tip-text {
+  color: white;
+  font-size: 22rpx;
+}
+
+/* 充值套餐 */
+.recharge-section {
+  margin: 20rpx;
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 20rpx;
+}
+
+.recharge-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.recharge-item {
+  position: relative;
+  width: 48%;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  border: 3rpx solid transparent;
+  transition: all 0.3s;
+  box-shadow: 0 4rpx 12rpx rgba(139, 115, 85, 0.05);
+}
+
+.recharge-item.selected {
+  border-color: #B8956E;
+  box-shadow: 0 4rpx 20rpx rgba(184, 149, 110, 0.25);
+}
+
+.special-tag {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: linear-gradient(135deg, #D4A574 0%, #E0B488 100%);
+  color: white;
+  padding: 4rpx 16rpx;
+  border-radius: 0 16rpx 0 16rpx;
+  font-size: 20rpx;
+  z-index: 2;
+}
+
+.recharge-content {
+  padding: 30rpx 20rpx 20rpx;
+  text-align: center;
+}
+
+.recharge-amount {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin-bottom: 10rpx;
+}
+
+.amount-symbol {
+  font-size: 28rpx;
+  color: #5C4A3A;
+  font-weight: bold;
+}
+
+.amount-num {
+  font-size: 56rpx;
+  color: #5C4A3A;
+  font-weight: bold;
+}
+
+.recharge-gift {
+  background: linear-gradient(135deg, #B8956E 0%, #D4A574 100%);
+  color: white;
+  padding: 6rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  display: inline-block;
+  margin-bottom: 10rpx;
+  min-height: 36rpx;
+  box-sizing: border-box;
+}
+
+.recharge-gift.hidden {
+  visibility: hidden;
+}
+
+.recharge-total {
+  font-size: 26rpx;
+  color: #8B7355;
+}
+
+.selected-icon {
+  position: absolute;
+  bottom: 10rpx;
+  right: 10rpx;
+  width: 40rpx;
+  height: 40rpx;
+  background: #B8956E;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24rpx;
+}
+
+/* 充值说明 */
+.tips-section {
+  margin: 20rpx;
+  padding: 30rpx;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 12rpx rgba(139, 115, 85, 0.05);
+  border: 1rpx solid rgba(160, 128, 96, 0.08);
+}
+
+.tips-content {
+  margin-top: 20rpx;
+}
+
+/* 动态充值说明样式 */
+.recharge-notice {
+  background: #FAF6F1;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  margin-top: 20rpx;
+}
+
+.notice-text {
+  font-size: 26rpx;
+  color: #8B7355;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+/* 备用样式（兼容旧的 tips-item） */
+.tips-item {
+  font-size: 26rpx;
+  color: #8B7355;
+  line-height: 2;
+  position: relative;
+  padding-left: 20rpx;
+}
+
+.tips-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8rpx;
+  height: 8rpx;
+  background: #B8956E;
+  border-radius: 50%;
+}
+
+/* 底部充值按钮 */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FFFBF7;
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid rgba(160, 128, 96, 0.10);
+  display: flex;
+  align-items: center;
+  z-index: 10;
+  box-shadow: 0 -4rpx 20rpx rgba(92, 74, 58, 0.08);
+}
+
+.bottom-info {
+  flex: 1;
+}
+
+.bottom-label {
+  font-size: 24rpx;
+  color: #8B7355;
+  margin-bottom: 4rpx;
+}
+
+.bottom-price {
+  display: flex;
+  align-items: baseline;
+}
+
+.price-symbol {
+  color: #B8956E;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+.price-num {
+  color: #B8956E;
+  font-size: 44rpx;
+  font-weight: bold;
+}
+
+.recharge-btn {
+  width: 100%;
+  padding: 24rpx 0;
+  color: white;
+  font-size: 28rpx;
+  font-weight: bold;
+  text-align: center;
+  border-top: none;
+  transition: all 0.3s;
+  background: linear-gradient(135deg, #B8956E 0%, #A68A55 100%);
+  border-radius: 44rpx;
+}
+
+.recharge-btn:active {
+  opacity: 0.85;
+}
+
+.empty-tip {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #8B7355;
+  font-size: 28rpx;
+}
+
+/* 强制清除固定背景 */
+.tab-line {
+  background: none !important;
+}
+
+.tab-item.active .tab-text {
+  color: inherit !important;
+}
+
+/* 加载更多 */
+.load-more {
+  text-align: center;
+  padding: 30rpx;
+  color: #8B7355;
+  font-size: 26rpx;
+}
+
+.loading-more {
+  text-align: center;
+  padding: 100rpx;
+  color: #8B7355;
+  font-size: 28rpx;
+}
+
+/* 图标通用样式 */
+.icon-img {
+  width: 48rpx;
+  height: 48rpx;
+  vertical-align: middle;
+}
+.btn-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 12rpx;
+  vertical-align: middle;
+}
+

@@ -1,0 +1,345 @@
+/* pages/lottery/lottery.wxss - 温暖奶油风 */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40rpx;
+  background: rgba(255,251,247,0.9);
+  padding: 20rpx 40rpx;
+  border-radius: 60rpx;
+}
+
+.title {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #B8956E;
+}
+
+.info {
+  font-size: 28rpx;
+  color: #8B7355;
+  margin-top: 10rpx;
+}
+
+.wheel-container {
+  position: relative;
+  width: 600rpx;
+  height: 600rpx;
+  margin: 0 auto;
+}
+
+.wheel-canvas {
+  width: 600rpx;
+  height: 600rpx;
+  border-radius: 50%;
+  background: #F0E6D8;
+}
+
+/* 指针样式 */
+.pointer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100rpx;
+  height: 100rpx;
+  background: #C4A070;
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.3);
+}
+
+.pointer::after {
+  content: "▼";
+  position: absolute;
+  top: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 40rpx;
+  color: #C4A070;
+}
+/* 指针样式 */
+.wheel-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60rpx;
+}
+.pointer {
+  position: absolute;
+  width: 120rpx;
+  height: 120rpx;
+  background: #FFFBF7;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.15);
+  z-index: 10;
+  border: 4rpx solid #D4A574;
+}
+.pointer-text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #D4A574;
+}
+.pointer::before {
+  content: '';
+  position: absolute;
+  top: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 20rpx solid transparent;
+  border-right: 20rpx solid transparent;
+  border-top: 40rpx solid #D4A574;
+}
+/* 图标通用样式 */
+.icon-img {
+  width: 48rpx;
+  height: 48rpx;
+  vertical-align: middle;
+}
+.btn-icon-img {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 12rpx;
+  vertical-align: middle;
+}
+
+/* ========== 奖品一览 ========== */
+.prize-overview {
+  width: 100%;
+  max-width: 640rpx;
+  margin-top: 50rpx;
+  background: rgba(255, 251, 247, 0.92);
+  border-radius: 24rpx;
+  padding: 30rpx 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(139, 115, 85, 0.1);
+}
+
+.prize-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #8B7355;
+  text-align: center;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 2rpx solid #E8D5C0;
+}
+
+.prize-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.prize-item {
+  width: 48%;
+  display: flex;
+  align-items: center;
+  padding: 16rpx 12rpx;
+  margin-bottom: 16rpx;
+  background: #FFFBF7;
+  border-radius: 16rpx;
+  border: 2rpx solid #F5EBE0;
+  box-sizing: border-box;
+}
+
+.prize-img {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 12rpx;
+  flex-shrink: 0;
+  margin-right: 12rpx;
+}
+
+.prize-emoji {
+  font-size: 48rpx;
+  flex-shrink: 0;
+  margin-right: 12rpx;
+  width: 72rpx;
+  text-align: center;
+  line-height: 72rpx;
+}
+
+.prize-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.prize-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #5C4A3A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.prize-type {
+  font-size: 22rpx;
+  color: #B8956E;
+  margin-top: 4rpx;
+}
+
+/* ========== 抽奖记录入口 ========== */
+.records-entry {
+  width: 100%;
+  max-width: 640rpx;
+  margin-top: 30rpx;
+  background: rgba(255, 251, 247, 0.92);
+  border-radius: 20rpx;
+  padding: 24rpx 28rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4rpx 20rpx rgba(139, 115, 85, 0.1);
+  box-sizing: border-box;
+  font-size: 30rpx;
+  font-weight: 600;
+  color: #8B7355;
+}
+
+.records-entry-arrow {
+  font-size: 40rpx;
+  color: #C4A070;
+  line-height: 1;
+}
+
+/* ========== 抽奖记录弹窗 ========== */
+.records-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.records-modal {
+  width: 100%;
+  max-height: 75vh;
+  background: #FFFBF7;
+  border-radius: 32rpx 32rpx 0 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx 32rpx 20rpx;
+  border-bottom: 2rpx solid #F0E2D2;
+}
+
+.records-title {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+}
+
+.records-close {
+  font-size: 36rpx;
+  color: #B8956E;
+  padding: 4rpx 12rpx;
+}
+
+.records-list {
+  max-height: 60vh;
+  padding: 20rpx 32rpx 40rpx;
+  box-sizing: border-box;
+}
+
+.records-empty,
+.records-loading {
+  text-align: center;
+  color: #B8956E;
+  font-size: 26rpx;
+  padding: 60rpx 0;
+}
+
+.record-item {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 0;
+  border-bottom: 2rpx solid #F5EBE0;
+}
+
+.record-item:last-child {
+  border-bottom: none;
+}
+
+.record-emoji {
+  font-size: 44rpx;
+  flex-shrink: 0;
+  margin-right: 20rpx;
+}
+
+.record-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.record-name-row {
+  display: flex;
+  align-items: center;
+}
+
+.record-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #5C4A3A;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 320rpx;
+}
+
+.record-type {
+  font-size: 20rpx;
+  color: #B8956E;
+  background: #F7EBDE;
+  border-radius: 10rpx;
+  padding: 4rpx 14rpx;
+  margin-left: 14rpx;
+  flex-shrink: 0;
+}
+
+.record-meta {
+  display: flex;
+  align-items: center;
+  margin-top: 8rpx;
+}
+
+.record-time {
+  font-size: 22rpx;
+  color: #B3A18F;
+}
+
+.record-coupon-status {
+  font-size: 20rpx;
+  color: #E58A3C;
+  background: #FDF0E3;
+  border-radius: 10rpx;
+  padding: 2rpx 12rpx;
+  margin-left: 16rpx;
+}

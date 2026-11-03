@@ -1,0 +1,9 @@
+{
+  "name": "updateLayout",
+  "version": "1.0.0",
+  "description": "更新页面背景图配置",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

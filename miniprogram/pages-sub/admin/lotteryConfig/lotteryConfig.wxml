@@ -1,0 +1,92 @@
+<view class="container">
+  <view class="card">
+    <view class="card-title">基础设置</view>
+    <view class="form-item">
+      <text class="label">抽奖开关</text>
+      <switch checked="{{config.enable}}" bindchange="onEnableChange" color="#e54d42" />
+    </view>
+    <view class="form-item">
+      <text class="label">每日抽奖次数</text>
+      <input type="number" value="{{config.dailyLimit}}" bindinput="onDailyLimitInput" placeholder="0表示不限制" />
+    </view>
+  </view>
+
+  <view class="card">
+    <view class="card-title">
+      <text>奖品列表</text>
+      <button class="add-btn" size="mini" bindtap="addPrize">+ 添加奖品</button>
+    </view>
+    
+    <view wx:for="{{config.rules}}" wx:key="index" class="prize-item">
+      <view class="prize-header">
+        <text class="prize-name">奖品{{index + 1}}</text>
+        <button class="delete-btn" size="mini" bindtap="deletePrize" data-index="{{index}}">删除</button>
+      </view>
+      
+      <view class="form-item">
+        <text class="label">奖品名称</text>
+        <input class="large-input" type="text" value="{{item.name}}" bindinput="onPrizeNameInput" data-index="{{index}}" placeholder="如：10元优惠券" />
+      </view>
+      
+      <view class="form-item">
+        <text class="label">奖品类型</text>
+        <picker mode="selector" range="{{prizeTypes}}" value="{{item.typeIndex || 0}}" bindchange="onPrizeTypeChange" data-index="{{index}}">
+          <view class="picker large-input">{{prizeTypes[item.typeIndex || 0]}}</view>
+        </picker>
+      </view>
+      
+      <!-- 优惠券/商品券选择区域 -->
+      <view class="form-item" wx:if="{{item.type === 'coupon' || item.type === 'product'}}">
+        <text class="label">选择优惠券/商品券</text>
+        <view class="coupon-selector" bindtap="showCouponSelector" data-index="{{index}}">
+          <text class="{{item.couponName ? 'selected' : 'placeholder'}}">
+            {{item.couponName || '请选择优惠券'}}
+          </text>
+          <text class="arrow">›</text>
+        </view>
+        <view wx:if="{{item.couponName}}" class="clear-coupon" bindtap="clearCoupon" data-index="{{index}}">清除</view>
+      </view>
+      
+      <view class="form-item">
+        <text class="label">中奖概率(%)</text>
+        <input class="large-input" type="digit" value="{{item.probability}}" bindinput="onProbabilityInput" data-index="{{index}}" placeholder="如：10.5" />
+      </view>
+      
+      <view class="form-item">
+        <text class="label">奖品图片</text>
+        <view class="image-upload large-image" bindtap="uploadPrizeImage" data-index="{{index}}">
+          <image wx:if="{{item.imageUrl}}" src="{{item.imageTempUrl || item.imageUrl}}" mode="aspectFill" />
+          <view wx:else class="upload-placeholder">+ 上传图片</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="btn-group">
+    <button class="save-btn" bindtap="saveConfig" disabled="{{saving}}">{{saving ? '保存中...' : '保存配置'}}</button>
+  </view>
+
+  <!-- 优惠券/商品券选择弹窗 -->
+  <view class="modal-mask" wx:if="{{showCouponPicker}}" catchtap="closeCouponPicker">
+    <view class="modal-dialog" catchtap="stopPropagation">
+      <view class="modal-title">选择优惠券/商品券</view>
+      <scroll-view class="coupon-list" scroll-y>
+        <view wx:for="{{couponList}}" wx:key="_id" class="coupon-item" bindtap="selectCoupon" data-coupon="{{item}}">
+          <view class="coupon-item-left">
+            <text class="coupon-item-name">{{item.name}}</text>
+            <text wx:if="{{item.type === 'discount'}}" class="coupon-item-desc">{{item.discount * 10}}折</text>
+            <text wx:elif="{{item.type === 'full_reduction'}}" class="coupon-item-desc">满{{item.condition}}减{{item.value}}元</text>
+            <text wx:elif="{{item.type === 'product'}}" class="coupon-item-desc">商品券：{{item.productName}}</text>
+          </view>
+          <view class="coupon-item-right">
+            <view class="radio-btn"></view>
+          </view>
+        </view>
+        <view wx:if="{{couponList.length === 0}}" class="empty-tip">暂无可用优惠券，请先去优惠券管理创建</view>
+      </scroll-view>
+      <view class="modal-footer">
+        <view class="modal-btn cancel" bindtap="closeCouponPicker">关闭</view>
+      </view>
+    </view>
+  </view>
+</view>

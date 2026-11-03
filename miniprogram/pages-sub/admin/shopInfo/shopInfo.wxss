@@ -1,0 +1,242 @@
+/* pages/admin/shopInfo/shopInfo.wxss */
+.page {
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 20rpx;
+}
+
+.form-section {
+  background: white;
+  border-radius: 20rpx;
+  padding: 40rpx 30rpx;
+  margin-bottom: 30rpx;
+}
+
+.form-item {
+  margin-bottom: 40rpx;
+}
+
+.form-item:last-child {
+  margin-bottom: 0;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+  font-weight: bold;
+}
+
+/* 加大输入框 */
+.large-input {
+  width: 100%;
+  height: 88rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  box-sizing: border-box;
+  background: #fff;
+}
+
+.form-textarea {
+  width: 100%;
+  min-height: 180rpx;
+  border: 2rpx solid #e5e5e5;
+  border-radius: 10rpx;
+  padding: 15rpx 20rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30rpx;
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: bold;
+  box-shadow: 0 8rpx 30rpx rgba(102, 126, 234, 0.3);
+}
+
+/* 新增样式 */
+.choose-location-btn {
+  background: #07c160;
+  color: #fff;
+  border-radius: 40rpx;
+  margin-top: 20rpx;
+  font-size: 28rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  width: 100%;
+}
+
+.location-info {
+  background: #f9f9f9;
+  padding: 20rpx;
+  border-radius: 12rpx;
+  margin-bottom: 20rpx;
+  font-size: 26rpx;
+  color: #333;
+}
+.coord {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.rule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+  flex-wrap: wrap;
+}
+.rule-row text {
+  width: 240rpx;
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+.rule-input {
+  flex: 1;
+  border: 2rpx solid #ddd;
+  border-radius: 16rpx;
+  padding: 22rpx 20rpx;
+  font-size: 30rpx;
+  background: #fff;
+  min-height: 80rpx;
+  box-sizing: border-box;
+}
+.rule-row .tip {
+  width: auto;
+  font-size: 24rpx;
+  color: #999;
+  margin-left: 10rpx;
+}
+/* 颜色选择器样式 */
+.color-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+  margin-bottom: 20rpx;
+}
+
+.color-option {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3rpx solid #e5e5e5;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.color-option.active {
+  border-color: #333;
+  transform: scale(1.1);
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.15);
+}
+
+.check-icon {
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+  text-shadow: 0 0 4rpx rgba(0,0,0,0.5);
+}
+
+.current-color {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.color-preview {
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
+  border: 2rpx solid #ddd;
+}
+
+.color-value {
+  font-size: 24rpx;
+  color: #999;
+}
+.time-slots-input {
+  width: 100%;
+  min-height: 150rpx;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+.tip {
+  font-size: 24rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+/* 客服二维码上传 */
+.qrcode-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qrcode-preview {
+  width: 300rpx;
+  border-radius: 16rpx;
+  border: 2rpx solid #e0d5c0;
+}
+
+.qrcode-placeholder {
+  width: 300rpx;
+  height: 300rpx;
+  background: #f5f5f5;
+  border-radius: 16rpx;
+  border: 2rpx dashed #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-icon {
+  font-size: 60rpx;
+  margin-bottom: 10rpx;
+}
+
+.placeholder-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.qrcode-actions {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+}
+
+.qrcode-btn {
+  padding: 14rpx 30rpx;
+  border-radius: 12rpx;
+  font-size: 26rpx;
+  line-height: 1;
+}
+
+.qrcode-btn.change-btn {
+  background: #667eea;
+  color: #fff;
+}
+
+.qrcode-btn.delete-btn {
+  background: #f56c6c;
+  color: #fff;
+}

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "优惠券管理",
+  "usingComponents": {
+    "van-empty": "/vant/empty/index"
+  }
+}

@@ -1,0 +1,54 @@
+<!-- pages/seckill/seckill.wxml -->
+<view class="page" style="--theme-color: {{themeColor}};">
+  <view class="header" style="background: linear-gradient(135deg, {{themeColor}}, {{themeColor}}dd);">
+    <text class="header-title">限时秒杀</text>
+    <text class="header-sub">手慢无！超值秒杀等你来抢</text>
+  </view>
+
+  <view class="seckill-list" wx:if="{{!loading && seckillList.length > 0}}">
+    <view class="seckill-card" wx:for="{{seckillList}}" wx:key="_id">
+      <image wx:if="{{item.imageUrl}}" class="card-img" src="{{item.imageUrl}}" mode="aspectFill"/>
+      <view class="card-tag {{item._status}}">
+        {{item._status === 'active' ? '进行中' : (item._status === 'upcoming' ? '即将开始' : (item._status === 'soldout' ? '已售罄' : '已结束'))}}
+      </view>
+      <view class="card-content">
+        <text class="card-title">{{item.title}}</text>
+        <view class="card-price-row">
+          <text class="card-price">¥{{item.price}}</text>
+          <text class="card-stock">库存 {{item.soldCount || 0}}/{{item.stock}}</text>
+        </view>
+        <view class="card-time">
+          <text wx:if="{{item._status === 'upcoming'}}">开始：{{item._startTimeText}}</text>
+          <text wx:if="{{item._status === 'active'}}">结束：{{item._endTimeText}}</text>
+          <text wx:if="{{item._status === 'ended'}}">结束：{{item._endTimeText}}</text>
+          <text wx:if="{{item._status === 'soldout'}}">结束：{{item._endTimeText}}</text>
+        </view>
+        <view wx:if="{{item._status === 'upcoming' || item._status === 'active'}}" class="countdown-box">
+          <text class="countdown-label">{{item._status === 'upcoming' ? '距离开始' : '距离结束'}}</text>
+          <text class="countdown-nums">{{item._countdownText}}</text>
+        </view>
+      </view>
+      <view class="card-action">
+        <button 
+          class="grab-btn {{item._status === 'active' ? '' : 'disabled'}}" 
+          style="{{item._status === 'active' ? 'background-color:' + themeColor + ';' : ''}}"
+          bindtap="onGrabSeckill" 
+          data-item="{{item}}"
+          disabled="{{item._status !== 'active'}}"
+        >
+          {{item._status === 'active' ? '立即秒杀' : (item._status === 'upcoming' ? '敬请期待' : (item._status === 'soldout' ? '已售罄' : '已结束'))}}
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!loading && seckillList.length === 0}}">
+    <text class="empty-icon">⚡</text>
+    <text class="empty-text">暂无秒杀活动</text>
+    <text class="empty-sub">敬请期待更多秒杀福利</text>
+  </view>
+
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

@@ -1,0 +1,219 @@
+/* pages/pointMall/pointMall.wxss - 温暖奶油风 */
+.container {
+  background: #F5EDE4;
+  min-height: 100vh;
+}
+.points-header {
+  padding: 40rpx 30rpx;
+  color: white;
+  font-size: 36rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.loading {
+  text-align: center;
+  margin-top: 100rpx;
+  color: #A09888;
+}
+.goods-list {
+  padding: 20rpx;
+}
+.goods-item {
+  display: flex;
+  background: #FFFBF7;
+  margin-bottom: 20rpx;
+  border-radius: 16rpx;
+  padding: 20rpx;
+  align-items: center;
+  box-shadow: 0 4rpx 12rpx rgba(139,115,85,0.05);
+  border: 1rpx solid rgba(160,128,96,0.06);
+}
+.goods-img {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 12rpx;
+  margin-right: 20rpx;
+  background: #F0E6D8;
+}
+.goods-info {
+  flex: 1;
+}
+.goods-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  margin-bottom: 8rpx;
+}
+.goods-desc {
+  font-size: 26rpx;
+  color: #8B7355;
+  margin-bottom: 8rpx;
+}
+.goods-points {
+  font-size: 28rpx;
+  color: #D4A574;
+  font-weight: bold;
+}
+.exchange-btn {
+  background: #6B9E6B;
+  color: white;
+  padding: 12rpx 30rpx;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+}
+.empty {
+  text-align: center;
+  margin-top: 200rpx;
+  color: #A09888;
+}
+
+/* 积分箭头提示 */
+.points-arrow {
+  font-size: 36rpx;
+  vertical-align: middle;
+  margin-left: 8rpx;
+}
+
+/* 积分明细弹窗 */
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-dialog {
+  background: #FFFBF7;
+  border-radius: 24rpx;
+  width: 90vw;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.points-detail-dialog {
+  width: 94vw;
+  height: 75vh;
+  max-height: 80vh;
+}
+.modal-title {
+  padding: 28rpx 20rpx 18rpx;
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #5C4A3A;
+  text-align: center;
+  border-bottom: 1rpx solid #F0E6D8;
+  flex-shrink: 0;
+}
+.points-total {
+  margin-top: 10rpx;
+  font-size: 26rpx;
+  color: #8B7355;
+  font-weight: normal;
+}
+.points-total-num {
+  color: #D4A574;
+  font-weight: bold;
+}
+
+.points-detail-content {
+  flex: 1;
+  height: 0;
+  padding: 0;
+}
+.points-loading,
+.points-empty {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #A09888;
+  font-size: 28rpx;
+}
+.points-list {
+  padding: 8rpx 12rpx;
+}
+.points-item {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 0;
+  border-bottom: 1rpx solid #F5EDE4;
+  overflow: visible;
+}
+.points-item:last-child {
+  border-bottom: none;
+}
+.points-item-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.points-item-icon {
+  width: 44rpx;
+  height: 44rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22rpx;
+  margin-right: 10rpx;
+  flex-shrink: 0;
+}
+.points-item-icon.income-icon {
+  background: #E8F5E9;
+}
+.points-item-icon.expense-icon {
+  background: #FFEBEE;
+}
+.points-item-info {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.points-item-desc {
+  font-size: 28rpx;
+  color: #5C4A3A;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.points-item-date {
+  font-size: 22rpx;
+  color: #A09888;
+  margin-top: 4rpx;
+}
+.points-item-amount {
+  flex: 0 0 130rpx;
+  width: 130rpx;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-left: 8rpx;
+  text-align: right;
+  box-sizing: border-box;
+}
+.points-item-amount.income {
+  color: #6B9E6B;
+}
+.points-item-amount.expense {
+  color: #E57373;
+}
+
+.modal-footer {
+  padding: 16rpx 20rpx;
+  display: flex;
+  justify-content: center;
+  border-top: 1rpx solid #F0E6D8;
+  flex-shrink: 0;
+}
+.modal-btn.confirm {
+  padding: 12rpx 60rpx;
+  background: #B8956E;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 26rpx;
+}

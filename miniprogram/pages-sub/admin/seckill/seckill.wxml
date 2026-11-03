@@ -1,0 +1,122 @@
+<!-- pages-sub/admin/seckill/seckill.wxml -->
+<view class="page" style="--theme-color: {{themeColor}};">
+  <view class="header-bar" style="background-color: {{themeColor}};">
+    <text class="header-title">秒杀活动管理</text>
+  </view>
+
+  <view class="content">
+    <view class="toolbar">
+      <button class="add-btn" style="background-color: {{themeColor}};" bindtap="addSeckill">+ 新增秒杀</button>
+    </view>
+
+    <view class="seckill-list" wx:if="{{seckillList.length > 0}}">
+      <view class="seckill-card" wx:for="{{seckillList}}" wx:key="_id">
+        <view class="card-header">
+          <text class="card-title">{{item.title}}</text>
+          <text class="card-status {{item._statusClass}}">{{item._statusText}}</text>
+        </view>
+        <view class="card-body">
+          <view class="info-row">
+            <text class="label">秒杀价：</text>
+            <text class="value price">¥{{item.price}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">库存：</text>
+            <text class="value">{{item.soldCount || 0}}/{{item.stock}}</text>
+          </view>
+          <view class="info-row">
+            <text class="label">时间：</text>
+            <text class="value">{{item.startTime}} ~ {{item.endTime}}</text>
+          </view>
+        </view>
+        <view class="card-footer">
+          <switch checked="{{item.enable}}" bindchange="toggleEnable" data-item="{{item}}" color="{{themeColor}}"/>
+          <view class="footer-btns">
+            <text class="btn-edit" bindtap="editSeckill" data-item="{{item}}">编辑</text>
+            <text class="btn-delete" bindtap="deleteSeckill" data-item="{{item}}">删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="empty" wx:if="{{seckillList.length === 0}}">
+      <text>暂无秒杀活动，点击上方按钮新增</text>
+    </view>
+  </view>
+
+  <!-- 新增/编辑弹窗 -->
+  <view class="modal-mask" wx:if="{{showModal}}" bindtap="closeModal"></view>
+  <view class="modal" wx:if="{{showModal}}">
+    <view class="modal-header">
+      <text class="modal-title">{{formTitle}}</text>
+      <text class="modal-close" bindtap="closeModal">×</text>
+    </view>
+    <view class="modal-body">
+      <view class="form-item">
+        <text class="form-label">活动标题</text>
+        <input class="form-input" placeholder="如：双11秒杀" value="{{form.title}}" bindinput="onTitleInput"/>
+      </view>
+      <view class="form-item">
+        <text class="form-label">商品券</text>
+        <picker mode="selector" range="{{couponList}}" range-key="name" value="{{couponIndex}}" bindchange="onCouponChange">
+          <view class="picker-value">{{selectedCoupon ? selectedCoupon.name : '请选择商品券'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">秒杀价格(元)</text>
+        <input class="form-input" type="digit" placeholder="如：9.9" value="{{form.price}}" bindinput="onPriceInput"/>
+      </view>
+      <view class="form-item">
+        <text class="form-label">秒杀库存</text>
+        <input class="form-input" type="number" placeholder="如：100" value="{{form.stock}}" bindinput="onStockInput"/>
+      </view>
+      <view class="form-item">
+        <text class="form-label">开始日期</text>
+        <picker mode="date" value="{{form.startDate}}" bindchange="onStartDateChange">
+          <view class="picker-value">{{form.startDate || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">开始时间</text>
+        <picker mode="time" value="{{form.startTimeStr}}" bindchange="onStartTimeChange">
+          <view class="picker-value">{{form.startTimeStr || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">结束日期</text>
+        <picker mode="date" value="{{form.endDate}}" bindchange="onEndDateChange">
+          <view class="picker-value">{{form.endDate || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">结束时间</text>
+        <picker mode="time" value="{{form.endTimeStr}}" bindchange="onEndTimeChange">
+          <view class="picker-value">{{form.endTimeStr || '请选择'}}</view>
+        </picker>
+      </view>
+      <view class="form-item">
+        <text class="form-label">启用状态</text>
+        <switch checked="{{form.enable}}" bindchange="onEnableChange" color="{{themeColor}}"/>
+      </view>
+      <view class="form-item form-item-column">
+        <text class="form-label">活动图片</text>
+        <view class="image-upload-area">
+          <view class="image-preview" wx:if="{{form.imageUrl}}" bindtap="chooseImage">
+            <image class="preview-img" src="{{form.imageUrl}}" mode="aspectFill"/>
+            <view class="image-mask" catchtap="removeImage">
+              <text class="remove-icon">×</text>
+            </view>
+          </view>
+          <view class="image-placeholder" wx:if="{{!form.imageUrl}}" bindtap="chooseImage">
+            <text class="placeholder-icon">📷</text>
+            <text class="placeholder-text">点击上传活动图片</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="modal-footer">
+      <button class="btn-cancel" bindtap="closeModal">取消</button>
+      <button class="btn-save" style="background-color: {{themeColor}};" bindtap="saveSeckill">保存</button>
+    </view>
+  </view>
+</view>

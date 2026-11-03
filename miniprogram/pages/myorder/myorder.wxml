@@ -1,0 +1,80 @@
+<!--pages/myorder/myorder.wxml-->
+<view class="page">
+  <!-- 顶部标签栏 -->
+  <view class="tabs">
+    <view class="tab-item {{currentTab === index ? 'active' : ''}}" wx:for="{{tabs}}" wx:key="index" bindtap="switchTab" data-index="{{index}}">
+      <text class="tab-text">{{item}}</text>
+      <view class="tab-line" wx:if="{{currentTab === index}}"></view>
+    </view>
+  </view>
+
+  <!-- 订单列表 -->
+  <view class="order-list">
+    <view class="order-item" wx:for="{{orderList}}" wx:key="_id" bindtap="goOrderDetail" data-order="{{item}}">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <view class="order-user-info" wx:if="{{userInfo}}">
+          <image class="user-avatar" src="{{userInfo.avatarUrl || '/images/my.png'}}" mode="aspectFill"></image>
+          <view class="user-info-text">
+            <view class="user-name">{{userInfo.nickName || '未设置昵称'}}</view>
+            <view class="user-phone" wx:if="{{userInfo.phoneNumber}}">{{userInfo.phoneNumber}}</view>
+          </view>
+        </view>
+        <view class="order-type">
+          <view class="order-type-row" wx:if="{{item.type === 'recharge'}}">
+            <image class="order-type-icon" src="/images/icons/icon_money.png" mode="aspectFit"></image>
+            <text>充值订单</text>
+          </view>
+          <view class="order-type-row" wx:elif="{{item.orderType === 'takeout'}}">
+            <image class="order-type-icon" src="/images/icons/icon_delivery.png" mode="aspectFit"></image>
+            <text>外卖订单</text>
+          </view>
+          <view class="order-type-row" wx:elif="{{item.orderType === 'dineIn'}}">
+            <image class="order-type-icon" src="/images/icons/icon_dining.png" mode="aspectFit"></image>
+            <text>堂食自取</text>
+          </view>
+          <view class="order-type-row" wx:else>
+            <image class="order-type-icon" src="/images/icons/icon_dining.png" mode="aspectFit"></image>
+            <text>点餐订单</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 充值订单内容 -->
+      <view class="order-content" wx:if="{{item.type === 'recharge'}}">
+        <view class="recharge-info">
+          <view class="recharge-item">
+            <text class="recharge-label">充值金额：</text>
+            <text class="recharge-value">¥{{item.amount}}</text>
+          </view>
+          <view class="recharge-item">
+            <text class="recharge-label">赠送金额：</text>
+            <text class="recharge-value gift">¥{{item.giveAmount}}</text>
+          </view>
+          <view class="recharge-item">
+            <text class="recharge-label">到账金额：</text>
+            <text class="recharge-value total">¥{{item.totalGet}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 点餐订单内容 -->
+      <view class="order-content" wx:else>
+        <view class="order-price-info">
+          <text class="label">实付：</text>
+          <text class="price">¥{{item.finalPrice}}</text>
+        </view>
+      </view>
+
+      <!-- 订单底部 -->
+      <view class="order-footer" wx:if="{{item.createTimeText}}">
+        <text class="order-time">{{item.createTimeText}}</text>
+        <text class="order-status {{item.statusClass}}">{{item.statusText}}</text>
+      </view>
+    </view>
+
+    <!-- 加载更多提示 -->
+    <view wx:if="{{!orderHasMore && orderList.length > 0}}" class="no-more">没有更多了</view>
+    <view wx:if="{{orderList.length === 0 && !loadingOrders}}" class="empty">暂无订单</view>
+  </view>
+</view>

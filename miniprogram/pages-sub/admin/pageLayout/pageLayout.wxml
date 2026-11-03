@@ -1,0 +1,59 @@
+<!-- pages-sub/admin/pageLayout/pageLayout.wxml -->
+<view class="container">
+  <view class="form-item">
+    <view class="form-label">开始页面背景图</view>
+    <view class="image-upload" bindtap="chooseStartBg">
+      <image wx:if="{{startBg}}" src="{{startBg}}" mode="aspectFill"></image>
+      <view wx:else class="upload-placeholder">+ 点击上传</view>
+    </view>
+    <view wx:if="{{startBg}}" class="remove-btn" bindtap="removeStartBg">移除</view>
+  </view>
+
+  <view class="form-item">
+    <view class="form-label">抽奖页面背景图</view>
+    <view class="image-upload" bindtap="chooseLotteryBg">
+      <image wx:if="{{lotteryBg}}" src="{{lotteryBg}}" mode="aspectFill"></image>
+      <view wx:else class="upload-placeholder">+ 点击上传</view>
+    </view>
+    <view wx:if="{{lotteryBg}}" class="remove-btn" bindtap="removeLotteryBg">移除</view>
+  </view>
+
+  <!-- 新增：开始页宣传弹窗图片 -->
+  <view class="form-item">
+    <view class="form-label">开始页宣传弹窗图片</view>
+    <view class="image-upload" bindtap="chooseStartPopupImage">
+      <image wx:if="{{startPopupImage}}" src="{{startPopupImage}}" mode="aspectFill"></image>
+      <view wx:else class="upload-placeholder">+ 点击上传</view>
+    </view>
+    <view wx:if="{{startPopupImage}}" class="remove-btn" bindtap="removeStartPopupImage">移除</view>
+    <view class="tip">用户选择堂食/外卖后弹出此图，建议尺寸 600*800</view>
+  </view>
+
+  <!-- 新增：结算成功弹窗图片（抽奖宣传） -->
+  <view class="form-item">
+    <view class="form-label">结算成功弹窗图片</view>
+    <view class="image-upload" bindtap="chooseRewardPopupImage">
+      <image wx:if="{{rewardPopupImage}}" src="{{rewardPopupImage}}" mode="aspectFill"></image>
+      <view wx:else class="upload-placeholder">+ 点击上传</view>
+    </view>
+    <view wx:if="{{rewardPopupImage}}" class="remove-btn" bindtap="removeRewardPopupImage">移除</view>
+    <view class="tip">下单成功后弹出，可引导用户去抽奖，建议尺寸 600*800</view>
+  </view>
+
+  <!-- 新增：点餐页轮播广告图 -->
+  <view class="form-item">
+    <view class="form-label">点餐页轮播广告图</view>
+    <view class="carousel-list">
+      <view class="carousel-item" wx:for="{{carouselImages}}" wx:key="index">
+        <image class="carousel-preview" src="{{item}}" mode="aspectFill"></image>
+        <view class="carousel-delete" bindtap="removeCarouselImage" data-index="{{index}}">✕</view>
+      </view>
+      <view class="carousel-add" bindtap="addCarouselImage" wx:if="{{carouselImages.length < 6}}">
+        <view class="add-placeholder">+ 添加图片</view>
+      </view>
+    </view>
+    <view class="tip">最多6张，建议尺寸 750*320，显示在点餐页跑马灯下方</view>
+  </view>
+
+  <button class="save-btn" type="primary" bindtap="saveLayout" disabled="{{saving}}">{{saving ? '保存中...' : '保存'}}</button>
+</view>
